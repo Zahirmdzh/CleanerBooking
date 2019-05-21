@@ -9,7 +9,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".SignupActivity"></activity>
+        <activity android:name=".SignupActivity"
+            android:label="Sign Up Account"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+
+
+
+        </activity>
+
         <activity
             android:name=".ContactActivity"
             android:label="Contact Us"
@@ -18,6 +28,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".HomeActivity" />
         </activity>
+
         <activity
             android:name=".NotificationActivity"
             android:label="Notification"
@@ -26,6 +37,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".HomeActivity" />
         </activity>
+
+
         <activity
             android:name=".HomeActivity"
             android:label="@string/title_activity_home" />
@@ -36,6 +49,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
     </application>
 
 </manifest>

@@ -1,8 +1,10 @@
 package sg.edu.rp.c300.cleanerbooking;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.annotation.NonNull;
 
@@ -14,6 +16,7 @@ import android.widget.TextView;
 
 public class HomeActivity extends AppCompatActivity {
     private TextView mTextMessage;
+    private ActionBar titlebar;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -24,15 +27,19 @@ public class HomeActivity extends AppCompatActivity {
 
                 case R.id.navigation_services:
                     mTextMessage.setText(R.string.title_activity_services);
+                    titlebar.setTitle("Services");
                     return true;
                 case R.id.navigation_booking:
                     mTextMessage.setText(R.string.title_booking);
+                    titlebar.setTitle("Booking");
                     return true;
                 case R.id.navigation_redeem:
                     mTextMessage.setText(R.string.title_redeem);
+                    titlebar.setTitle("Redeem");
                     return true;
                 case R.id.navigation_profile:
                     mTextMessage.setText(R.string.title_profile);
+                    titlebar.setTitle("Profile");
                     return true;
             }
             return false;
@@ -49,7 +56,14 @@ public class HomeActivity extends AppCompatActivity {
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
+        titlebar = getSupportActionBar();
+        titlebar.setTitle("Services");
 
+//        Intent i = getIntent();
+//        String msg = i.getStringExtra("username");
+        SharedPreferences pref = getSharedPreferences("app",MODE_PRIVATE);
+        String msg = pref.getString("email","");
+        mTextMessage.setText("Welcome " + msg);
     }
 
 
