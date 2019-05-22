@@ -12,6 +12,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -19,8 +21,10 @@ import java.util.ArrayList;
 public class HomeActivity extends AppCompatActivity {
     private TextView mTextMessage;
     private ActionBar titlebar;
+    ListView lv;
 
-    ArrayList<String> aa;
+    ArrayList<Service> alService;
+    ArrayAdapter aa;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -68,6 +72,19 @@ public class HomeActivity extends AppCompatActivity {
         SharedPreferences pref = getSharedPreferences("app",MODE_PRIVATE);
         String msg = pref.getString("email","");
         mTextMessage.setText("Welcome " + msg);
+
+        lv = findViewById(R.id.listViewService);
+        alService = new ArrayList<Service>();
+
+        Service item1 = new Service("Home Cleaaning","We provide household services");
+        alService.add(item1);
+
+        aa = new HomeAdapter(HomeActivity.this,R.layout.home_row,alService);
+        lv.setAdapter(aa);
+
+
+
+
     }
 
 
