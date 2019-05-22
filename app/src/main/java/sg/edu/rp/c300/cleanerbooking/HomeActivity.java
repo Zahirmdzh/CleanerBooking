@@ -14,9 +14,13 @@ import android.view.MenuItem;
 
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class HomeActivity extends AppCompatActivity {
     private TextView mTextMessage;
     private ActionBar titlebar;
+
+    ArrayList<String> aa;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
