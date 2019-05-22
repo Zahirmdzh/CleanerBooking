@@ -29,8 +29,6 @@ public class SignupActivity extends AppCompatActivity {
     private static final Pattern PHONE_PATTERN =
             Pattern.compile("^" +
                     "(?=.*(8|9))" +
-                    "(.[0-9])" +
-                    ".{0,7}" +
                     "$");
 
     EditText etUsername, etPhone, etEmail, etPass, etCfmpass;
@@ -142,7 +140,7 @@ public class SignupActivity extends AppCompatActivity {
         if (phone.isEmpty()) {
             etPhone.setError("Field is required");
             return false;
-        } else if (!PHONE_PATTERN.matcher(phone).matches()) {
+        } else if (!PHONE_PATTERN.matcher(phone).matches() && phone.length() != 8) {
             etPhone.setError("Invalid Number");
             return false;
         } else {
