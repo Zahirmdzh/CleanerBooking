@@ -140,7 +140,7 @@ public class SignupActivity extends AppCompatActivity {
         if (phone.isEmpty()) {
             etPhone.setError("Field is required");
             return false;
-        } else if (!PHONE_PATTERN.matcher(phone).matches() && phone.length() != 8) {
+        } else if (!PHONE_PATTERN.matcher(phone).matches() && phone.length() != 8) { // change
             etPhone.setError("Invalid Number");
             return false;
         } else {
