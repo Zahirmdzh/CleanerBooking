@@ -13,7 +13,7 @@ public class RewardAdapter extends ArrayAdapter<Reward> {
 
     private ArrayList<Reward> reward;
     private Context context;
-    private TextView name;
+    private TextView name,desc;
 
     public RewardAdapter(Context context, int resource, ArrayList<Reward> objects) {
         super(context, resource, objects);
@@ -31,13 +31,14 @@ public class RewardAdapter extends ArrayAdapter<Reward> {
 
 //        number = rowView.findViewById(R.id.tv_number);
         name = rowView.findViewById(R.id.tvName);
+        desc = rowView.findViewById(R.id.tvDesc);
+
 
         Reward currenTask = reward.get(position);
 
-        for (int i=0;i<reward.size();i++) {
-//            number.setText(i);
-        }
+
         name.setText(currenTask.getName());
+        desc.setText(currenTask.getDesc());
 
         return rowView;
     }

@@ -25,13 +25,16 @@ public class HomeActivity extends AppCompatActivity {
     ListView lv;
 
     ArrayList<Service> alService;
-    ArrayAdapter aa;
+    ArrayAdapter service;
 
     ArrayAdapter book;
-    ArrayList<Booking> booking;
+    ArrayList<Booking> alBooking;
+
+    ArrayAdapter point;
+    ArrayList<Reward> alReward;
 
     ArrayAdapter profile;
-    ArrayList<Profile> record;
+    ArrayList<Profile> alRecord;
 //    SharedPreferences pref = getSharedPreferences("app",MODE_PRIVATE);
 //    String msg = pref.getString("email","");
 
@@ -51,8 +54,8 @@ public class HomeActivity extends AppCompatActivity {
                     Service item1 = new Service("Home Cleaning","We provide household services");
                     alService.add(item1);
 
-                    aa = new HomeAdapter(HomeActivity.this,R.layout.home_row,alService);
-                    lv.setAdapter(aa);
+                    service = new HomeAdapter(HomeActivity.this,R.layout.home_row,alService);
+                    lv.setAdapter(service);
                     return true;
 
                 case R.id.navigation_booking:
@@ -60,36 +63,47 @@ public class HomeActivity extends AppCompatActivity {
                     titlebar.setTitle("Booking");
 //                    Intent i = new Intent(HomeActivity.this, BookingActivity.class);
 //                    startActivity(i);
-                    booking = new ArrayList<Booking>();
+                    alBooking = new ArrayList<Booking>();
 
                     Booking itemB1 = new Booking("Home Booking","22/04/2019");
                     Booking itemB2 = new Booking("Home Booking","12/06/2021");
 
-                    booking.add(itemB1);
-                    booking.add(itemB2);
+                    alBooking.add(itemB1);
+                    alBooking.add(itemB2);
 
-                    book = new BookingAdapter(HomeActivity.this,R.layout.booking_row,booking);
+                    book = new BookingAdapter(HomeActivity.this,R.layout.booking_row,alBooking);
                     lv.setAdapter(book);
                     return true;
 
                 case R.id.navigation_redeem:
 //                    mTextMessage.setText(R.string.title_redeem);
                     titlebar.setTitle("Redeem");
+
+                    alReward= new ArrayList<Reward>();
+
+                    Reward reward1 = new Reward("Discount 1","50% Discount");
+                    Reward reward2 = new Reward("Discount 2","Free Service");
+
+                    alReward.add(reward1);
+                    alReward.add(reward2);
+
+                    point = new RewardAdapter(HomeActivity.this,R.layout.profile_row,alReward);
+                    lv.setAdapter(point);
                     return true;
 
                 case R.id.navigation_profile:
 //                    mTextMessage.setText(R.string.title_profile);
                     titlebar.setTitle("Profile");
 
-                    record= new ArrayList<Profile>();
+                    alRecord= new ArrayList<Profile>();
 
                     Profile record1 = new Profile("Loyalty Points");
                     Profile record2 = new Profile("Inbox");
 
-                    record.add(record1);
-                    record.add(record2);
+                    alRecord.add(record1);
+                    alRecord.add(record2);
 
-                    profile = new ProfileAdapter(HomeActivity.this,R.layout.profile_row,record);
+                    profile = new ProfileAdapter(HomeActivity.this,R.layout.profile_row,alRecord);
                     lv.setAdapter(profile);
                     return true;
             }
@@ -116,8 +130,8 @@ public class HomeActivity extends AppCompatActivity {
         Service item1 = new Service("Home Cleaning","We provide household services");
         alService.add(item1);
 
-        aa = new HomeAdapter(HomeActivity.this,R.layout.home_row,alService);
-        lv.setAdapter(aa);
+        service = new HomeAdapter(HomeActivity.this,R.layout.home_row,alService);
+        lv.setAdapter(service);
 
     }
 
