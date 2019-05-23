@@ -6,20 +6,20 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity"
-    android:padding="20dp"
-    android:layout_margin="5dp"
     android:background="#C1D6BE">
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         app:srcCompat="@drawable/cleaner" />
 
     <EditText
         android:id="@+id/editTextEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="45dp"
+        android:paddingLeft="5dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="100dp"
         android:ems="10"
@@ -29,10 +29,11 @@
 
     <EditText
         android:id="@+id/editTextPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="45dp"
+        android:paddingLeft="5dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="30dp"
         android:background="@drawable/edit_textbox"
         android:ems="10"
         android:hint="@string/etpasshint"
@@ -43,7 +44,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:text="@string/tvforgot" />
 
     <LinearLayout
@@ -81,7 +82,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:text="@string/tvguest" />
 
     <!--<Button-->

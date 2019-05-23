@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -79,6 +80,8 @@ public class HomeActivity extends AppCompatActivity {
                 case R.id.navigation_profile:
 //                    mTextMessage.setText(R.string.title_profile);
                     titlebar.setTitle("Profile");
+
+
                     return true;
             }
             return false;
