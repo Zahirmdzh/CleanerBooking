@@ -144,7 +144,7 @@ public class SignupActivity extends AppCompatActivity {
             etPhone.setError("Field is required");
             return false;
         } else if (!PHONE_PATTERN.matcher(phone).matches() && phone.length() != 8) { // change
-            etPhone.setError("Invalid Number");
+            etPhone.setError("Must start with 8 or 9 with 8 digits ");
             return false;
         } else {
             etPhone.setError(null);

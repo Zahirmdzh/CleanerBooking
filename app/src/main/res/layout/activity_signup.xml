@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".SignupActivity">
+    tools:context=".SignupActivity"
+    android:background="#C1D6BE">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/my_toolbar"
@@ -18,48 +19,72 @@
 
     <EditText
         android:id="@+id/editTextUsername"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="45dp"
+        android:paddingLeft="5dp"
+        android:layout_gravity="center_horizontal"
         android:ems="10"
         android:hint="Username"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:background="@drawable/edit_textbox"
+
+        android:layout_marginTop="40dp"/>
 
     <EditText
         android:id="@+id/editTextPhone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="45dp"
+        android:layout_gravity="center_horizontal"
         android:ems="10"
+        android:layout_marginTop="30dp"
         android:hint="Phone Number"
-        android:inputType="phone" />
+        android:inputType="phone"
+        android:paddingLeft="5dp"
+        android:background="@drawable/edit_textbox"/>
 
     <EditText
         android:id="@+id/editTextEmail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="45dp"
+        android:layout_gravity="center_horizontal"
         android:ems="10"
+        android:layout_marginTop="30dp"
         android:hint="Email"
-        android:inputType="textEmailAddress" />
+        android:paddingLeft="5dp"
+        android:inputType="textEmailAddress"
+        android:background="@drawable/edit_textbox"/>
 
     <EditText
         android:id="@+id/editTextPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="45dp"
+        android:layout_gravity="center_horizontal"
         android:ems="10"
+        android:layout_marginTop="30dp"
         android:hint="Password"
-        android:inputType="text" />
+        android:inputType="text"
+        android:paddingLeft="5dp"
+        android:background="@drawable/edit_textbox"/>
 
     <EditText
         android:id="@+id/editTextPasswordCfm"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="45dp"
+        android:layout_gravity="center_horizontal"
         android:ems="10"
+        android:layout_marginTop="30dp"
         android:hint="Confirm Password"
-        android:inputType="text" />
+        android:inputType="text"
+        android:paddingLeft="5dp"
+        android:background="@drawable/edit_textbox"/>
 
     <Button
         android:id="@+id/buttonSubmit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/hintConfirm"
-        />
+        android:layout_width="300dp"
+        android:layout_height="45dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/btn_rounded"
+        android:text="@string/hintConfirm"
+        android:textColor="#ffffff" />
 </LinearLayout>
