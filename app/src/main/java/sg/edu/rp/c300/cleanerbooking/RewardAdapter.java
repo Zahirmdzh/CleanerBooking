@@ -27,19 +27,17 @@ public class RewardAdapter extends ArrayAdapter<Reward> {
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View rowView = inflater.inflate(R.layout._row, parent, false);
+        View rowView = inflater.inflate(R.layout.reward_row, parent, false);
 
 //        number = rowView.findViewById(R.id.tv_number);
-        name = rowView.findViewById(R.id.tv_name);
-        date = rowView.findViewById(R.id.tv_date);
+        name = rowView.findViewById(R.id.tvName);
 
-        Booking currenTask = booking.get(position);
+        Reward currenTask = reward.get(position);
 
-        for (int i=0;i<booking.size();i++) {
+        for (int i=0;i<reward.size();i++) {
 //            number.setText(i);
         }
         name.setText(currenTask.getName());
-        date.setText(currenTask.getDate());
 
         return rowView;
     }
