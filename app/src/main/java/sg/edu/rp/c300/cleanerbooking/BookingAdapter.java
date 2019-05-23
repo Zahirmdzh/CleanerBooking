@@ -31,14 +31,14 @@ public class BookingAdapter extends ArrayAdapter<Booking> {
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.booking_row, parent, false);
 
-        number = rowView.findViewById(R.id.tv_number);
+//        number = rowView.findViewById(R.id.tv_number);
         name = rowView.findViewById(R.id.tv_name);
         date = rowView.findViewById(R.id.tv_date);
 
         Booking currenTask = booking.get(position);
 
         for (int i=0;i<booking.size();i++) {
-            number.setText(i);
+//            number.setText(i);
         }
         name.setText(currenTask.getName());
         date.setText(currenTask.getDate());
