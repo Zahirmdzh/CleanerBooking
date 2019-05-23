@@ -109,6 +109,13 @@ public class HomeActivity extends AppCompatActivity {
         titlebar = getSupportActionBar();
         titlebar.setTitle("Services");
 
+        alService = new ArrayList<Service>();
+
+        Service item1 = new Service("Home Cleaning","We provide household services");
+        alService.add(item1);
+
+        aa = new HomeAdapter(HomeActivity.this,R.layout.home_row,alService);
+        lv.setAdapter(aa);
 
     }
 
