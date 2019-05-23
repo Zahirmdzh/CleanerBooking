@@ -31,8 +31,6 @@ public class BookingActivity extends AppCompatActivity {
 
                 case R.id.navigation_services:
                     titlebar.setTitle("Services");
-                    Intent i = new Intent(BookingActivity.this, HomeActivity.class);
-                    startActivity(i);
                     return true;
                 case R.id.navigation_booking:
                     titlebar.setTitle("Booking");
@@ -61,17 +59,6 @@ public class BookingActivity extends AppCompatActivity {
         setSupportActionBar(myToolbar);
         titlebar = getSupportActionBar();
         titlebar.setTitle("Booking");
-
-        booking = new ArrayList<Booking>();
-
-        Booking item1 = new Booking("Home Cleaning","26/03/2018");
-        Booking item2 = new Booking("Home Booking","19/05/2021");
-
-        booking.add(item1);
-        booking.add(item2);
-
-        aa = new BookingAdapter(BookingActivity.this,R.layout.booking_row,booking);
-        lv.setAdapter(aa);
 
 
         //String txt = "";

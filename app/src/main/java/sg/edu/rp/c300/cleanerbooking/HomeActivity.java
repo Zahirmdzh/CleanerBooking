@@ -20,6 +20,7 @@ import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity {
     private TextView mTextMessage;
+
     private ActionBar titlebar;
     ListView lv;
 
@@ -29,6 +30,8 @@ public class HomeActivity extends AppCompatActivity {
     ArrayAdapter book;
     ArrayList<Booking> booking;
 
+    ArrayAdapter profile;
+    ArrayList<Profile> record;
 //    SharedPreferences pref = getSharedPreferences("app",MODE_PRIVATE);
 //    String msg = pref.getString("email","");
 
@@ -43,7 +46,6 @@ public class HomeActivity extends AppCompatActivity {
                 case R.id.navigation_services:
 //                    mTextMessage.setText(R.string.title_activity_services);
                     titlebar.setTitle("Services");
-                    mTextMessage.setText("");
                     alService = new ArrayList<Service>();
 
                     Service item1 = new Service("Home Cleaning","We provide household services");
@@ -73,12 +75,20 @@ public class HomeActivity extends AppCompatActivity {
                 case R.id.navigation_redeem:
 //                    mTextMessage.setText(R.string.title_redeem);
                     titlebar.setTitle("Redeem");
-                    //mTextMessage.setText("You have 300 Loyalty Points");
                     return true;
 
                 case R.id.navigation_profile:
 //                    mTextMessage.setText(R.string.title_profile);
                     titlebar.setTitle("Profile");
+
+                    record= new ArrayList<Profile>();
+
+                    Profile record1 = new Profile("Elizabeth","Joseph","lizbethjoseph@gmail.com",83531646);
+
+                    record.add(record1);
+
+                    profile = new ProfileAdapter(HomeActivity.this,R.layout.profile_row,record);
+                    lv.setAdapter(profile);
                     return true;
             }
             return false;
@@ -99,15 +109,7 @@ public class HomeActivity extends AppCompatActivity {
         titlebar = getSupportActionBar();
         titlebar.setTitle("Services");
 
-//        Intent i = getIntent();
-//        String msg = i.getStringExtra("username");
-        alService = new ArrayList<Service>();
 
-        Service item1 = new Service("Home Cleaning","We provide household services");
-        alService.add(item1);
-
-        aa = new HomeAdapter(HomeActivity.this,R.layout.home_row,alService);
-        lv.setAdapter(aa);
     }
 
 

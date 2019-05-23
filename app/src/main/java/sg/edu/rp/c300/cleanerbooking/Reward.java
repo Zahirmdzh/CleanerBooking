@@ -3,18 +3,19 @@ package sg.edu.rp.c300.cleanerbooking;
 public class Reward {
 
     private String name;
-    private String date;
+    private String desc;
 
-    public Reward(String name, String date) {
+
+    public Reward(String name, String desc) {
         this.name = name;
-        this.date = date;
+        this.desc = desc;
     }
 
     public String getName() {
         return name;
     }
 
-    public String getDate() {
-        return date;
+    public String getDesc() {
+        return desc;
     }
 }
