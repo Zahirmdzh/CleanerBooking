@@ -21,6 +21,7 @@ import java.util.ArrayList;
 public class HomeActivity extends AppCompatActivity {
     private TextView mTextMessage;
     private ActionBar titlebar;
+
     ListView lv;
 
     ArrayList<Service> alService;
@@ -40,7 +41,10 @@ public class HomeActivity extends AppCompatActivity {
                 case R.id.navigation_booking:
                     mTextMessage.setText(R.string.title_booking);
                     titlebar.setTitle("Booking");
-                    return true;
+
+                    startActivity(new Intent(HomeActivity.this,BookingActivity.class));
+                    break;
+
                 case R.id.navigation_redeem:
                     mTextMessage.setText(R.string.title_redeem);
                     titlebar.setTitle("Redeem");
