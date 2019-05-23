@@ -9,33 +9,37 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class ProfileAdapter extends ArrayAdapter<Profile> {
+public class RewardAdapter extends ArrayAdapter<Reward> {
 
-    private ArrayList<Profile> profile;
+    private ArrayList<Reward> reward;
     private Context context;
     private TextView name;
 
-    public ProfileAdapter(Context context, int resource, ArrayList<Profile> objects) {
+    public RewardAdapter(Context context, int resource, ArrayList<Reward> objects) {
         super(context, resource, objects);
         // Store the food that is passed to this adapter
-        profile = objects;
+        reward = objects;
         // Store Context object as we would need to use it later
         this.context = context;
-
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View rowView = inflater.inflate(R.layout.profile_row, parent, false);
-        name = rowView.findViewById(R.id.tv_points);
-        Profile currenTask = profile.get(position);
+        View rowView = inflater.inflate(R.layout._row, parent, false);
 
-        for (int i=0;i<profile.size();i++) {
+//        number = rowView.findViewById(R.id.tv_number);
+        name = rowView.findViewById(R.id.tv_name);
+        date = rowView.findViewById(R.id.tv_date);
+
+        Booking currenTask = booking.get(position);
+
+        for (int i=0;i<booking.size();i++) {
 //            number.setText(i);
         }
         name.setText(currenTask.getName());
+        date.setText(currenTask.getDate());
 
         return rowView;
     }

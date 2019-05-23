@@ -83,9 +83,11 @@ public class HomeActivity extends AppCompatActivity {
 
                     record= new ArrayList<Profile>();
 
-                    Profile record1 = new Profile("Elizabeth","Joseph","lizbethjoseph@gmail.com",83531646);
+                    Profile record1 = new Profile("Loyalty Points");
+                    Profile record2 = new Profile("Inbox");
 
                     record.add(record1);
+                    record.add(record2);
 
                     profile = new ProfileAdapter(HomeActivity.this,R.layout.profile_row,record);
                     lv.setAdapter(profile);
