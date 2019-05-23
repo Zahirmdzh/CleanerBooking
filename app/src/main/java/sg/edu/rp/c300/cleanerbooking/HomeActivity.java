@@ -56,12 +56,11 @@ public class HomeActivity extends AppCompatActivity {
                 case R.id.navigation_booking:
 //                    mTextMessage.setText(R.string.title_booking);
                     titlebar.setTitle("Booking");
-                    mTextMessage.setText("");
 //                    Intent i = new Intent(HomeActivity.this, BookingActivity.class);
 //                    startActivity(i);
                     booking = new ArrayList<Booking>();
 
-                    Booking itemB1 = new Booking("Home Cleaning","22/04/1987");
+                    Booking itemB1 = new Booking("Home Booking","22/04/2019");
                     Booking itemB2 = new Booking("Home Booking","12/06/2021");
 
                     booking.add(itemB1);
