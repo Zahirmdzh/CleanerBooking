@@ -1,5 +1,6 @@
 package sg.edu.rp.c300.cleanerbooking;
 
+import android.content.Intent;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -62,11 +63,13 @@ public class SignupActivity extends AppCompatActivity {
                 String pass = etPass.getText().toString().trim();
                 String cfmpass = etCfmpass.getText().toString();
 
-                if (validateUsername() && validatePhone() && validateEmail() && validatePassword()) {
+                if (validateUsername() && validatePhone() && validateEmail() && validatePassword() && pass.equals(cfmpass)) {
                     long value = db.registerUser(user, phone, email, pass);
 
                     if (value > 0) {
                         toastMsg("Sign Up successful!");
+                        Intent i = new Intent(SignupActivity.this, MainActivity.class);
+                        startActivity(i);
                     } else {
                         toastMsg("There are incompleted fields");
                     }
