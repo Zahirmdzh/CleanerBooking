@@ -16,7 +16,16 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+
+import cz.msebera.android.httpclient.Header;
 
 public class HomeActivity extends AppCompatActivity {
     private TextView mTextMessage;
@@ -25,7 +34,7 @@ public class HomeActivity extends AppCompatActivity {
     ListView lv;
 
     ArrayList<Service> alService;
-    ArrayAdapter service;
+    ArrayAdapter aaService;
 
     ArrayAdapter book;
     ArrayList<Booking> alBooking;
@@ -51,11 +60,7 @@ public class HomeActivity extends AppCompatActivity {
                     titlebar.setTitle("Services");
                     alService = new ArrayList<Service>();
 
-                    Service item1 = new Service("Home Cleaning","We provide household services");
-                    alService.add(item1);
-
-                    service = new HomeAdapter(HomeActivity.this,R.layout.home_row,alService);
-                    lv.setAdapter(service);
+                    addToService();
                     return true;
 
                 case R.id.navigation_booking:
@@ -126,12 +131,35 @@ public class HomeActivity extends AppCompatActivity {
         titlebar.setTitle("Services");
 
         alService = new ArrayList<Service>();
+        aaService = new HomeAdapter(HomeActivity.this,R.layout.home_row,alService);
+        lv.setAdapter(aaService);
+//        addToService();
 
-        Service item1 = new Service("Home Cleaning","We provide household services");
-        alService.add(item1);
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get("http://10.0.2.2/FYPCleanerAdmin/getServices.php", new JsonHttpResponseHandler() {
 
-        service = new HomeAdapter(HomeActivity.this,R.layout.home_row,alService);
-        lv.setAdapter(service);
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+
+
+                try {
+                    for (int i = 0; i <response.length();i++) {
+
+                        JSONObject service = response.getJSONObject(i);
+                        String serviceId = service.getString("service_id");
+                        String name = service.getString("service_name");
+                        String desc = service.getString("service_description");
+                        Service s = new Service(serviceId, name, desc);
+                        alService.add(s);
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                aaService.notifyDataSetChanged();
+            }
+        });
+
 
     }
 
@@ -156,6 +184,20 @@ public class HomeActivity extends AppCompatActivity {
             startActivity(i);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void addToService() {
+        Service item1 = new Service("H111","Home Cleaning","We provide household services");
+        Service item2 = new Service("H222","Office Cleaning","We provide office services");
+        Service item3 = new Service("H333","Public area Cleaning","We provide household services");
+        Service item4 = new Service("H444","Misc Cleaning","We provide household services");
+        alService.add(item1);
+        alService.add(item2);
+        alService.add(item3);
+        alService.add(item4);
+
+        aaService = new HomeAdapter(HomeActivity.this,R.layout.home_row,alService);
+        lv.setAdapter(aaService);
     }
 }
 

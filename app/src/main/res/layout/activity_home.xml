@@ -7,7 +7,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:actionBarNavMode="standard"
-    tools:context=".HomeActivity">
+    tools:context=".HomeActivity"
+    >
 
     <!--<android.support.design.widget.AppBarLayout-->
         <!--android:id="@+id/appbar"-->
@@ -39,7 +40,7 @@
 
     <ListView
         android:id="@+id/listViewService"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@id/nav_view"
         app:layout_constraintLeft_toLeftOf="parent"

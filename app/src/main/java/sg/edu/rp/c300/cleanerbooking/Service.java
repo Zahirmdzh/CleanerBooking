@@ -1,26 +1,26 @@
 package sg.edu.rp.c300.cleanerbooking;
 
-import android.media.Image;
-import android.widget.ImageView;
 
 public class Service {
-    private String title;
+    private String id;
+    private String name;
     private String description;
 
 
-    public Service(String title, String description) {
-        this.title = title;
+    public Service(String id, String name, String description) {
+        this.id = id;
+        this.name = name;
         this.description = description;
 
     }
-
-    public String getTitle() {
-        return title;
+    public String getId() {
+        return id;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public String getName() {
+        return name;
     }
+
 
     public String getDescription() {
         return description;

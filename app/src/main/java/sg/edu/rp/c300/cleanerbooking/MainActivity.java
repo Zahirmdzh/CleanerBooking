@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
                     session.saveEmail(email);
 
                     Intent i = new Intent(MainActivity.this,HomeActivity.class);
-//                    i.putExtra("username",email);
+
                     startActivity(i);
 
                 } else if(email.isEmpty()){

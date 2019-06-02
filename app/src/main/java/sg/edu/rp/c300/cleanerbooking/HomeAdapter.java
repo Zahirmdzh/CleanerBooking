@@ -45,9 +45,9 @@ public class HomeAdapter extends ArrayAdapter<Service> {
         //note position
         Service currService = services.get(position);
         String description = currService.getDescription();
-        String title = currService.getTitle();
+        String name = currService.getName();
         tvDesc.setText(description);
-        tvTitle.setText(title);
+        tvTitle.setText(name);
 
         btnBook.setOnClickListener(new View.OnClickListener() {
             @Override
