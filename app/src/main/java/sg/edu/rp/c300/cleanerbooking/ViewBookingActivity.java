@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class BookingActivity extends AppCompatActivity {
+public class ViewBookingActivity extends AppCompatActivity {
 
     private ActionBar titlebar;
     ListView lv;
@@ -61,10 +61,6 @@ public class BookingActivity extends AppCompatActivity {
         titlebar.setTitle("Booking");
 
 
-        //String txt = "";
-        //for (int i = 0; i < booking.size(); i++) {
-        //    txt += i + ". " + data.get(i) + "\n";
-        //    booking.add(data.get(i));
-        //}
+
     }
 }

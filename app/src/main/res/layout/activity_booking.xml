@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#C1D6BE"
-    tools:context=".BookingActivity">
+    tools:context=".ViewBookingActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/my_toolbar"

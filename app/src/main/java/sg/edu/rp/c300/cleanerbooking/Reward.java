@@ -1,6 +1,8 @@
 package sg.edu.rp.c300.cleanerbooking;
 
-public class Reward {
+import java.io.Serializable;
+
+public class Reward implements Serializable {
 
     private String name;
     private String desc;

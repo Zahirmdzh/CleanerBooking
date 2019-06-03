@@ -1,7 +1,6 @@
 package sg.edu.rp.c300.cleanerbooking;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.ActionBar;
@@ -12,9 +11,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -39,8 +42,9 @@ public class HomeActivity extends AppCompatActivity {
     ArrayAdapter book;
     ArrayList<Booking> alBooking;
 
-    ArrayAdapter point;
+    ArrayAdapter aaReward;
     ArrayList<Reward> alReward;
+    ListView lvReward;
 
     ArrayAdapter profile;
     ArrayList<Profile> alRecord;
@@ -56,7 +60,7 @@ public class HomeActivity extends AppCompatActivity {
             switch (item.getItemId()) {
 
                 case R.id.navigation_services:
-//                    mTextMessage.setText(R.string.title_activity_services);
+                    mTextMessage.setText(R.string.title_activity_services);
                     titlebar.setTitle("Services");
                     alService = new ArrayList<Service>();
 
@@ -64,24 +68,23 @@ public class HomeActivity extends AppCompatActivity {
                     return true;
 
                 case R.id.navigation_booking:
-//                    mTextMessage.setText(R.string.title_booking);
+                    mTextMessage.setText(R.string.title_booking);
                     titlebar.setTitle("Booking");
-//                    Intent i = new Intent(HomeActivity.this, BookingActivity.class);
-//                    startActivity(i);
+
                     alBooking = new ArrayList<Booking>();
 
-                    Booking itemB1 = new Booking("Home Booking","22/04/2019");
-                    Booking itemB2 = new Booking("Home Booking","12/06/2021");
+                    Booking itemB1 = new Booking("Home Booking", "22/04/2019");
+                    Booking itemB2 = new Booking("Home Booking", "12/06/2021");
 
                     alBooking.add(itemB1);
                     alBooking.add(itemB2);
 
-                    book = new BookingAdapter(HomeActivity.this,R.layout.booking_row,alBooking);
+                    book = new BookingAdapter(HomeActivity.this, R.layout.booking_row, alBooking);
                     lv.setAdapter(book);
                     return true;
 
                 case R.id.navigation_redeem:
-//                    mTextMessage.setText(R.string.title_redeem);
+                    mTextMessage.setText("Choose from a range of offers");
                     titlebar.setTitle("Redeem");
 
                     alReward= new ArrayList<Reward>();
@@ -92,15 +95,18 @@ public class HomeActivity extends AppCompatActivity {
                     alReward.add(reward1);
                     alReward.add(reward2);
 
-                    point = new RewardAdapter(HomeActivity.this,R.layout.profile_row,alReward);
-                    lv.setAdapter(point);
+                    aaReward = new RewardAdapter(HomeActivity.this,R.layout.profile_row,alReward);
+                    lv.setAdapter(aaReward);
+
+
+
                     return true;
 
                 case R.id.navigation_profile:
-//                    mTextMessage.setText(R.string.title_profile);
+                    mTextMessage.setText(R.string.title_profile);
                     titlebar.setTitle("Profile");
 
-                    alRecord= new ArrayList<Profile>();
+                    alRecord = new ArrayList<Profile>();
 
                     Profile record1 = new Profile("Loyalty Points");
                     Profile record2 = new Profile("Inbox");
@@ -108,7 +114,7 @@ public class HomeActivity extends AppCompatActivity {
                     alRecord.add(record1);
                     alRecord.add(record2);
 
-                    profile = new ProfileAdapter(HomeActivity.this,R.layout.profile_row,alRecord);
+                    profile = new ProfileAdapter(HomeActivity.this, R.layout.profile_row, alRecord);
                     lv.setAdapter(profile);
                     return true;
             }
@@ -123,7 +129,9 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         BottomNavigationView navView = findViewById(R.id.nav_view);
         lv = findViewById(R.id.listViewService);
+        lvReward = findViewById(R.id.listViewReward);
         mTextMessage = findViewById(R.id.message);
+        mTextMessage.setText(R.string.title_activity_services);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
@@ -131,9 +139,9 @@ public class HomeActivity extends AppCompatActivity {
         titlebar.setTitle("Services");
 
         alService = new ArrayList<Service>();
-        aaService = new HomeAdapter(HomeActivity.this,R.layout.home_row,alService);
+        aaService = new HomeAdapter(HomeActivity.this, R.layout.home_row, alService);
         lv.setAdapter(aaService);
-//        addToService();
+
 
         AsyncHttpClient client = new AsyncHttpClient();
         client.get("http://10.0.2.2/FYPCleanerAdmin/getServices.php", new JsonHttpResponseHandler() {
@@ -143,7 +151,7 @@ public class HomeActivity extends AppCompatActivity {
 
 
                 try {
-                    for (int i = 0; i <response.length();i++) {
+                    for (int i = 0; i < response.length(); i++) {
 
                         JSONObject service = response.getJSONObject(i);
                         String serviceId = service.getString("service_id");
@@ -160,7 +168,22 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
+                Service serviceSelected = alService.get(pos);  // Get the selected Category
+                Intent intent = new Intent(HomeActivity.this, ServiceBookingActivity.class);
+                intent.putExtra("service", serviceSelected);
+                startActivity(intent);
+            }
+        });
 
+    }
+
+
+    public void clickLV(View view) {
+        Button bt = (Button) view;
+        Toast.makeText(this, "Button " + bt.getText().toString(), Toast.LENGTH_LONG).show();
     }
 
 
@@ -174,12 +197,12 @@ public class HomeActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         int id = item.getItemId();
-        if(id == R.id.action_info) {
+        if (id == R.id.action_info) {
             Intent i = new Intent(this, ContactActivity.class);
             startActivity(i);
 
         }
-        if(id == R.id.action_notification) {
+        if (id == R.id.action_notification) {
             Intent i = new Intent(this, NotificationActivity.class);
             startActivity(i);
         }
@@ -187,18 +210,49 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void addToService() {
-        Service item1 = new Service("H111","Home Cleaning","We provide household services");
-        Service item2 = new Service("H222","Office Cleaning","We provide office services");
-        Service item3 = new Service("H333","Public area Cleaning","We provide household services");
-        Service item4 = new Service("H444","Misc Cleaning","We provide household services");
-        alService.add(item1);
-        alService.add(item2);
-        alService.add(item3);
-        alService.add(item4);
 
-        aaService = new HomeAdapter(HomeActivity.this,R.layout.home_row,alService);
+        alService = new ArrayList<Service>();
+        aaService = new HomeAdapter(HomeActivity.this, R.layout.home_row, alService);
         lv.setAdapter(aaService);
+
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get("http://10.0.2.2/FYPCleanerAdmin/getServices.php", new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+
+
+                try {
+                    for (int i = 0; i < response.length(); i++) {
+
+                        JSONObject service = response.getJSONObject(i);
+                        String serviceId = service.getString("service_id");
+                        String name = service.getString("service_name");
+                        String desc = service.getString("service_description");
+                        Service s = new Service(serviceId, name, desc);
+                        alService.add(s);
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                aaService.notifyDataSetChanged();
+            }
+        });
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
+                Service serviceSelected = alService.get(pos);  // Get the selected Category
+                Intent intent = new Intent(HomeActivity.this, ServiceBookingActivity.class);
+                intent.putExtra("service", serviceSelected);
+                startActivity(intent);
+            }
+        });
     }
 }
+
+
+
 
 

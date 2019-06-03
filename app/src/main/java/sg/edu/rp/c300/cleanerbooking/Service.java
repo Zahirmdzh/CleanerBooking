@@ -1,7 +1,9 @@
 package sg.edu.rp.c300.cleanerbooking;
 
 
-public class Service {
+import java.io.Serializable;
+
+public class Service implements Serializable {
     private String id;
     private String name;
     private String description;

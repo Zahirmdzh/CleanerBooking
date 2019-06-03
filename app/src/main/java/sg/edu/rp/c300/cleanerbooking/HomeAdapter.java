@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class HomeAdapter extends ArrayAdapter<Service> {
     Context context;
     ArrayList<Service> services;
-
+    customButtonListener customListener;
 
 
     public HomeAdapter(Context context, int resource, ArrayList<Service> objects) {
@@ -28,7 +28,7 @@ public class HomeAdapter extends ArrayAdapter<Service> {
     }
 
     @Override
-    public View getView(int position, View convertView, final ViewGroup parent) {
+    public View getView(final int position, View convertView, final ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -43,25 +43,35 @@ public class HomeAdapter extends ArrayAdapter<Service> {
 
 
         //note position
-        Service currService = services.get(position);
+        final Service currService = services.get(position);
         String description = currService.getDescription();
         String name = currService.getName();
         tvDesc.setText(description);
         tvTitle.setText(name);
 
+
         btnBook.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+           @Override
+           public void onClick(View v) {
+//
+//              Intent zoom=new Intent(parent.getContext(), NotificationActivity.class);
+//               parent.getContext().startActivity(zoom);
 
-
-                Intent zoom=new Intent(parent.getContext(), NotificationActivity.class);
-                parent.getContext().startActivity(zoom);
             }
-        });
+       });
 
         return rowView;
 
 
+    }
+
+
+    public interface customButtonListener {
+        public void onButtonClickListener(int position,String value);
+    }
+
+    public void setCustomButtonListener(customButtonListener listener) {
+        this.customListener = listener;
     }
 
 }
