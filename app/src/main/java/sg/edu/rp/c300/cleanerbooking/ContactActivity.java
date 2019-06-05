@@ -17,5 +17,6 @@ public class ContactActivity extends AppCompatActivity {
         ActionBar AB = getSupportActionBar();
         AB.setDisplayHomeAsUpEnabled(true);
 
+
     }
 }

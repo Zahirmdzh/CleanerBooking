@@ -19,46 +19,44 @@ public class ProfileActivity extends AppCompatActivity {
 
     private ActionBar titlebar;
     ArrayAdapter aa;
-    ArrayList<Booking> booking;
+    ArrayList<Profile> alProfile;
+
 
     ListView lv;
-    TextView name;
+    TextView tvName;
     Button btnEditProfile, btnLogout;
-
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-
-                case R.id.navigation_services:
-                    titlebar.setTitle("Services");
-                    return true;
-                case R.id.navigation_booking:
-                    titlebar.setTitle("Booking");
-                    return true;
-                case R.id.navigation_redeem:
-                    titlebar.setTitle("Redeem");
-                    return true;
-                case R.id.navigation_profile:
-                    titlebar.setTitle("Profile");
-                    return true;
-            }
-            return false;
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-        BottomNavigationView navView = findViewById(R.id.nav_view);
+        Toolbar myTB = findViewById(R.id.my_toolbar);
+        setSupportActionBar(myTB);
+        ActionBar AB = getSupportActionBar();
+        AB.setDisplayHomeAsUpEnabled(true);
+
+
         lv = findViewById(R.id.lv);
-        navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
         titlebar = getSupportActionBar();
         titlebar.setTitle("Profile");
+
+        tvName=findViewById(R.id.textViewName);
+        tvName.setText(R.string.title_profile);
+        titlebar.setTitle("Profile");
+
+        alProfile = new ArrayList<Profile>();
+
+        Profile record1 = new Profile("Loyalty Points");
+        Profile record2 = new Profile("Inbox");
+
+        alProfile.add(record1);
+        alProfile.add(record2);
+
+        aa = new ProfileAdapter(ProfileActivity.this, R.layout.profile_row, alProfile);
+        lv.setAdapter(aa);
+
     }
 }

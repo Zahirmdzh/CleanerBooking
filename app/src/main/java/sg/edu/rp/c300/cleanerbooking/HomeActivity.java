@@ -48,8 +48,8 @@ public class HomeActivity extends AppCompatActivity {
 
     ArrayAdapter profile;
     ArrayList<Profile> alRecord;
-//    SharedPreferences pref = getSharedPreferences("app",MODE_PRIVATE);
-//    String msg = pref.getString("email","");
+//  SharedPreferences pref = getSharedPreferences("app",MODE_PRIVATE);
+//  String msg = pref.getString("email","");
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -87,36 +87,58 @@ public class HomeActivity extends AppCompatActivity {
                     mTextMessage.setText("Choose from a range of offers");
                     titlebar.setTitle("Redeem");
 
-                    alReward= new ArrayList<Reward>();
+//                    alReward= new ArrayList<Reward>();
+//
+//                    Reward reward1 = new Reward("Discount 1","50% Discount");
+//                    Reward reward2 = new Reward("Discount 2","Free Service");
+//
+//                    alReward.add(reward1);
+//                    alReward.add(reward2);
+//
+//                    aaReward = new RewardAdapter(HomeActivity.this,R.layout.profile_row,alReward);
+//                    lv.setAdapter(aaReward);
 
-                    Reward reward1 = new Reward("Discount 1","50% Discount");
-                    Reward reward2 = new Reward("Discount 2","Free Service");
-
-                    alReward.add(reward1);
-                    alReward.add(reward2);
-
-                    aaReward = new RewardAdapter(HomeActivity.this,R.layout.profile_row,alReward);
+                    alReward = new ArrayList<Reward>();
+                    aaReward = new RewardAdapter(HomeActivity.this,R.layout.reward_row,alReward);
                     lv.setAdapter(aaReward);
 
+                    AsyncHttpClient client = new AsyncHttpClient();
+                    client.get("http://10.0.2.2/FYPCleanerAdmin/getRewards.php", new JsonHttpResponseHandler() {
 
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+
+
+                            try {
+                                for (int i = 0; i <response.length();i++) {
+                                    JSONObject reward = response.getJSONObject(i);
+                                    String rewardId = reward.getString("reward_code");
+                                    String name = reward.getString("reward_name");
+                                    String desc = reward.getString("reward_description");
+                                    Reward s = new Reward(name, desc);
+                                    alReward.add(s);
+                                }
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            aaReward.notifyDataSetChanged();
+                        }
+                    });
+
+                    lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
+                            Reward rewardSelected = alReward.get(pos);  // Get the selected Category
+                            Intent intent = new Intent(HomeActivity.this, RewardActivity.class);
+                            intent.putExtra("reward",rewardSelected);
+                            startActivity(intent);
+                        }
+                    });
 
                     return true;
 
-                case R.id.navigation_profile:
-                    mTextMessage.setText(R.string.title_profile);
-                    titlebar.setTitle("Profile");
 
-                    alRecord = new ArrayList<Profile>();
-
-                    Profile record1 = new Profile("Loyalty Points");
-                    Profile record2 = new Profile("Inbox");
-
-                    alRecord.add(record1);
-                    alRecord.add(record2);
-
-                    profile = new ProfileAdapter(HomeActivity.this, R.layout.profile_row, alRecord);
-                    lv.setAdapter(profile);
-                    return true;
             }
             return false;
         }
@@ -129,7 +151,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         BottomNavigationView navView = findViewById(R.id.nav_view);
         lv = findViewById(R.id.listViewService);
-        lvReward = findViewById(R.id.listViewReward);
+
         mTextMessage = findViewById(R.id.message);
         mTextMessage.setText(R.string.title_activity_services);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -204,6 +226,10 @@ public class HomeActivity extends AppCompatActivity {
         }
         if (id == R.id.action_notification) {
             Intent i = new Intent(this, NotificationActivity.class);
+            startActivity(i);
+        }
+        if (id == R.id.action_profile) {
+            Intent i = new Intent(this, ProfileActivity.class);
             startActivity(i);
         }
         return super.onOptionsItemSelected(item);

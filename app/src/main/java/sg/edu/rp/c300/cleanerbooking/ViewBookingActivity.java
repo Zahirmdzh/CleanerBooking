@@ -38,9 +38,6 @@ public class ViewBookingActivity extends AppCompatActivity {
                 case R.id.navigation_redeem:
                     titlebar.setTitle("Redeem");
                     return true;
-                case R.id.navigation_profile:
-                    titlebar.setTitle("Profile");
-                    return true;
             }
             return false;
         }

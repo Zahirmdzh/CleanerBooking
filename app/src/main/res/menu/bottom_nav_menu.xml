@@ -21,9 +21,6 @@
         android:icon="@drawable/ic_redeem_black_24dp"
         android:title="@string/title_redeem" />
 
-    <item
-        android:id="@+id/navigation_profile"
-        android:icon="@drawable/ic_person_black_24dp"
-        android:title="@string/title_profile" />
+
 
 </menu>
