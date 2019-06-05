@@ -1,7 +1,6 @@
 package sg.edu.rp.c300.cleanerbooking;
 
 import android.content.Intent;
-import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -46,7 +45,7 @@ public class SignupActivity extends AppCompatActivity {
         ActionBar AB = getSupportActionBar();
         AB.setDisplayHomeAsUpEnabled(true);
 
-        etUsername = findViewById(R.id.editTextUsername);
+        etUsername = findViewById(R.id.editTextFullname);
         etPhone = findViewById(R.id.editTextPhone);
         etEmail = findViewById(R.id.editTextEmail);
         etPass = findViewById(R.id.editTextPassword);

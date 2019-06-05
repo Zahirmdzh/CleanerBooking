@@ -18,17 +18,17 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <EditText
-        android:id="@+id/editTextUsername"
+        android:id="@+id/editTextFullname"
         android:layout_width="300dp"
         android:layout_height="45dp"
-        android:paddingLeft="5dp"
         android:layout_gravity="center_horizontal"
-        android:ems="10"
-        android:hint="Username"
-        android:inputType="textPersonName"
+        android:layout_marginTop="40dp"
         android:background="@drawable/edit_textbox"
+        android:ems="10"
+        android:hint="Full name"
+        android:inputType="textPersonName"
 
-        android:layout_marginTop="40dp"/>
+        android:paddingLeft="5dp" />
 
     <EditText
         android:id="@+id/editTextPhone"
@@ -62,7 +62,7 @@
         android:ems="10"
         android:layout_marginTop="30dp"
         android:hint="Password"
-        android:inputType="text"
+        android:inputType="textPassword"
         android:paddingLeft="5dp"
         android:background="@drawable/edit_textbox"/>
 
@@ -74,7 +74,7 @@
         android:ems="10"
         android:layout_marginTop="30dp"
         android:hint="Confirm Password"
-        android:inputType="text"
+        android:inputType="textPassword"
         android:paddingLeft="5dp"
         android:background="@drawable/edit_textbox"/>
 
@@ -87,4 +87,5 @@
         android:background="@drawable/btn_rounded"
         android:text="@string/hintConfirm"
         android:textColor="#ffffff" />
+
 </LinearLayout>
