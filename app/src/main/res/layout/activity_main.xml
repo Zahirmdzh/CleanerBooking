@@ -37,7 +37,7 @@
         android:background="@drawable/edit_textbox"
         android:ems="10"
         android:hint="@string/etpasshint"
-        android:inputType="text" />
+        android:inputType="textPassword" />
 
     <TextView
         android:id="@+id/tvForgot"
@@ -45,7 +45,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="15dp"
-        android:text="@string/tvforgot" />
+        android:text="@string/tvforgot"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
     <LinearLayout
         android:layout_width="300dp"
@@ -83,7 +84,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="15dp"
-        android:text="@string/tvguest" />
+        android:text="@string/tvguest"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
     <!--<Button-->
         <!--android:id="@+id/buttonFb"-->
