@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ServiceBookingActivity2">
+
+    <include layout="@layout/toolbar"/>
+
+    <TextView
+        android:id="@+id/textViewTime"
+        android:layout_width="300dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:background="@drawable/textviewtime"
+        android:clickable="true"
+        android:drawableRight="@drawable/ic_access_time_black_24dp"
+        android:padding="5dp"
+        android:text="Select Time:"
+        android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/textViewDate"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:background="@drawable/textviewtime"
+        android:drawableRight="@drawable/ic_date_range_black_24dp"
+        android:padding="5dp"
+        android:text="Select Date:"
+        android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="300dp"
+        android:text="Have any Requests?" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center|bottom"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/inputbox"
+            android:ems="10"
+            android:hint="Enter any additional information here"
+            android:inputType="textPersonName" />
+
+        <Button
+            android:id="@+id/buttonConfirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:text="Next" />
+
+    </LinearLayout>
+
+</LinearLayout>

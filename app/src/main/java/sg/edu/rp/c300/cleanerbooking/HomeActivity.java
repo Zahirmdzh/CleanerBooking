@@ -171,7 +171,6 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
 
-
                 try {
                     for (int i = 0; i < response.length(); i++) {
 
@@ -199,7 +198,6 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
     }
 
 

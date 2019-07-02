@@ -27,7 +27,6 @@
         android:ems="10"
         android:hint="Full name"
         android:inputType="textPersonName"
-
         android:paddingLeft="5dp" />
 
     <EditText

@@ -1,0 +1,151 @@
+package sg.edu.rp.c300.cleanerbooking;
+
+import android.content.SharedPreferences;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.text.ParseException;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import cz.msebera.android.httpclient.Header;
+
+public class ServiceBookingActivity4 extends AppCompatActivity {
+
+    TextView tvTime,tvDate, tvAddress,tvContact,tvFname,tvLname,tvEmail;
+    SharedPreferences pref;
+    SharedPreferences.Editor prefedit;
+    Button btnConfirm;
+    String time,date,dateString,address,contact,fname,lname,email;
+    private AsyncHttpClient client;
+    Date d;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_service_booking4);
+
+        Toolbar myTB = findViewById(R.id.my_toolbar);
+        setSupportActionBar(myTB);
+        ActionBar AB = getSupportActionBar();
+        AB.setDisplayHomeAsUpEnabled(true);
+
+        client = new AsyncHttpClient();
+
+        tvTime = findViewById(R.id.textViewTime);
+        tvDate = findViewById(R.id.textViewDate);
+        tvAddress = findViewById(R.id.textViewAddress);
+        tvContact = findViewById(R.id.textViewContact);
+        tvFname = findViewById(R.id.textViewFname);
+        tvLname = findViewById(R.id.textViewLname);
+        tvEmail = findViewById(R.id.textViewEmail);
+
+        File f = new File(
+                "/data/data/sg.edu.rp.c300.cleanerbooking/shared_prefs/mybooking.xml");
+        if (f.exists()) {
+            pref = getSharedPreferences("mybooking", MODE_PRIVATE);
+
+            time = pref.getString("mytime","");
+            date = pref.getString("mydate","");
+
+            address = pref.getString("address","");
+            contact = pref.getString("contact","");
+            fname = pref.getString("fname","");
+            lname = pref.getString("lname","");
+            email = pref.getString("email","");
+
+            tvTime.setText(time);
+            tvDate.setText(date);
+
+            tvAddress.setText(address);
+            tvContact.setText(contact);
+            tvFname.setText(fname);
+            tvLname.setText(lname);
+            tvEmail.setText(email);
+
+
+            if (!date.isEmpty() && !time.isEmpty()) {
+                // Create the MySQL datetime string
+                dateString = date + " " + time + ":00";
+                Log.d("DATETIME", dateString);
+
+            }
+
+            Log.d("TAG", "SharedPreferences mybooking.xml : exist");
+
+        } else {
+            Log.d("TAG", "Setup default preferences");
+        }
+
+
+        btnConfirm = findViewById(R.id.buttonConfirm);
+
+        btnConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                btnCreateOnClick(v);
+
+
+                prefedit = getApplicationContext().getSharedPreferences("mybooking",MODE_PRIVATE).edit();
+                prefedit.clear();
+                prefedit.commit();
+            }
+        });
+    }
+
+    private void btnCreateOnClick(View v) {
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+        try {
+            Date d = sdf.parse(date + time);
+
+            Log.d("DATETIME", String.valueOf(d));
+        } catch (ParseException ex) {
+            Log.v("Exception", ex.getLocalizedMessage());
+        }
+
+        RequestParams params = new RequestParams();
+        params.add("first_name", fname);
+        params.add("last_name", lname);
+        params.add("mobile", contact);
+        params.add("address_postal_code", address);
+        params.add("email", email);
+        params.add("booking_date_time", dateString);
+
+        client.post("http://10.0.2.2/FYPCleanerAdmin/addMember.php", params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+
+                try {
+                    Log.i("JSON Results: ", response.toString());
+
+                    Toast.makeText(getApplicationContext(), response.getString("message"), Toast.LENGTH_SHORT).show();
+                    finish();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+    }
+
+
+}

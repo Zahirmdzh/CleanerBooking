@@ -5,6 +5,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,6 +15,7 @@ public class ServiceBookingActivity extends AppCompatActivity {
     TextView tv;
     private ActionBar titlebar;
     ImageView iv;
+    Button btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +35,15 @@ public class ServiceBookingActivity extends AppCompatActivity {
         Intent i = getIntent();
         Service service = (Service)i.getSerializableExtra("service");
         tv.setText(service.getName() + "\n" + service.getDescription());
+
+        btn = findViewById(R.id.button);
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ServiceBookingActivity.this, ServiceBookingActivity2.class));
+            }
+        });
 
     }
 }
