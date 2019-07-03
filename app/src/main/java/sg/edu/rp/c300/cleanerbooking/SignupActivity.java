@@ -31,9 +31,8 @@ public class SignupActivity extends AppCompatActivity {
                     "(?=.*(8|9))" +
                     "$");
 
-    EditText etUsername, etPhone, etEmail, etPass, etCfmpass;
+    EditText etFullName, etEmail, etPass, etCfmpass;
     Button btnSubmit;
-    DBHelper db;
 
 
     @Override
@@ -45,27 +44,27 @@ public class SignupActivity extends AppCompatActivity {
         ActionBar AB = getSupportActionBar();
         AB.setDisplayHomeAsUpEnabled(true);
 
-        etUsername = findViewById(R.id.editTextFullname);
-        etPhone = findViewById(R.id.editTextPhone);
+        etFullName = findViewById(R.id.editTextFullname);
         etEmail = findViewById(R.id.editTextEmail);
         etPass = findViewById(R.id.editTextPassword);
         etCfmpass = findViewById(R.id.editTextPasswordCfm);
         btnSubmit = findViewById(R.id.buttonSubmit);
-        db = new DBHelper(this);
+
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String user = etUsername.getText().toString().trim();
-                String phone = etPhone.getText().toString().trim();
+                String name = etFullName.getText().toString().trim();
                 String email = etEmail.getText().toString().trim();
                 String pass = etPass.getText().toString().trim();
                 String cfmpass = etCfmpass.getText().toString();
 
-                if (validateUsername() && validatePhone() && validateEmail() && validatePassword() && pass.equals(cfmpass)) {
-                    long value = db.registerUser(user, phone, email, pass);
+                if (validateFullname() && validateEmail() && validatePassword() && pass.equals(cfmpass)) {
+                    //long value = db.registerUser(user, phone, email, pass);
+                    String type="reg";
+                    BackgroundTask backgroundTask= new BackgroundTask(getApplicationContext());
+                    backgroundTask.execute(type, name, email, pass);
 
-                    if (value > 0) {
                         toastMsg("Sign Up successful!");
                         Intent i = new Intent(SignupActivity.this, MainActivity.class);
                         startActivity(i);
@@ -73,7 +72,7 @@ public class SignupActivity extends AppCompatActivity {
                         toastMsg("There are incompleted fields");
                     }
                 }
-            }
+
         });
     }
 
@@ -121,35 +120,32 @@ public class SignupActivity extends AppCompatActivity {
         }
     }
 
-    private boolean validateUsername() {
-        String usernameInput = etUsername.getText().toString().trim();
+    private boolean validateFullname() {
+        String usernameInput = etFullName.getText().toString().trim();
 
         if (usernameInput.isEmpty()) {
-            etUsername.setError("Field is required");
-            return false;
-        } else if (usernameInput.length() > 20) {
-            etUsername.setError("Max 20 characters");
+            etFullName.setError("Field is required");
             return false;
         } else {
-            etUsername.setError(null);
+            etFullName.setError(null);
             return true;
         }
     }
-
-    private boolean validatePhone() {
-        String phone = etPhone.getText().toString().trim();
-
-        if (phone.isEmpty()) {
-            etPhone.setError("Field is required");
-            return false;
-        } else if (!PHONE_PATTERN.matcher(phone).matches() && phone.length() != 8) { // change
-            etPhone.setError("Must start with 8 or 9 with 8 digits ");
-            return false;
-        } else {
-            etPhone.setError(null);
-            return true;
-        }
-    }
+//
+//    private boolean validatePhone() {
+//        String phone = etPhone.getText().toString().trim();
+//
+//        if (phone.isEmpty()) {
+//            etPhone.setError("Field is required");
+//            return false;
+//        } else if (!PHONE_PATTERN.matcher(phone).matches() && phone.length() != 8) { // change
+//            etPhone.setError("Must start with 8 or 9 with 8 digits ");
+//            return false;
+//        } else {
+//            etPhone.setError(null);
+//            return true;
+//        }
+//    }
 
 
 

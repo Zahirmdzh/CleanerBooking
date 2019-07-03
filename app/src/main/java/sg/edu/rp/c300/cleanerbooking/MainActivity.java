@@ -15,9 +15,8 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
 
     Button btnlogin, btnsignup;
-    TextView tvguest;
+    TextView tvguest ,tvForgot;
     EditText etEmail, etPass;
-    DBHelper db;
     private Session session;
 
 
@@ -29,9 +28,9 @@ public class MainActivity extends AppCompatActivity {
         btnlogin = findViewById(R.id.buttonLogin);
         btnsignup = findViewById(R.id.buttonSignup);
         tvguest = findViewById(R.id.textViewGuest);
+        tvForgot = findViewById(R.id.tvForgot);
         etEmail = findViewById(R.id.editTextEmail);
         etPass = findViewById(R.id.editTextPassword);
-        db = new DBHelper(this);
         session = new Session(this);
 
         if(session.loggedinStatus()){
@@ -46,14 +45,24 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        tvForgot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this,ForgotPassword.class);
+                startActivity(i);
+            }
+        });
+
         btnlogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String email = etEmail.getText().toString();
                 String pass = etPass.getText().toString();
 
-                Boolean result = db.checkUser(email, pass);
-                if (result == true) {
+                String type="login";
+                BackgroundTask backgroundTask= new BackgroundTask(getApplicationContext());
+                backgroundTask.execute(type, email, pass);
+
                     Toast.makeText(MainActivity.this,"Welcome! You are now logged in",
                             Toast.LENGTH_LONG).show();
 
@@ -64,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
 
                     startActivity(i);
 
-                } else if(email.isEmpty()){
+                  if(email.isEmpty()){
                     etEmail.setError("Empty field");
 
                 } else if(pass.isEmpty()){
@@ -90,9 +99,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void toastMsg(String message){
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-    }
+    //private void toastMsg(String message){
+        //Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    //}
 
     private void emptyEmail() {
         etEmail.setText("");
