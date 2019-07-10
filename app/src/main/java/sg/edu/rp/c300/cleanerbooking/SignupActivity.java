@@ -1,17 +1,29 @@
 package sg.edu.rp.c300.cleanerbooking;
 
+import android.content.AbstractThreadedSyncAdapter;
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.regex.Pattern;
+
+import cz.msebera.android.httpclient.Header;
 
 
 public class SignupActivity extends AppCompatActivity {
@@ -31,9 +43,10 @@ public class SignupActivity extends AppCompatActivity {
                     "(?=.*(8|9))" +
                     "$");
 
-    EditText etUsername, etPhone, etEmail, etPass, etCfmpass;
+    EditText etFullName, etEmail, etPass, etCfmpass;
     Button btnSubmit;
-    DBHelper db;
+    private AsyncHttpClient client;
+    private String name,email,pass,cfmpass;
 
 
     @Override
@@ -45,35 +58,61 @@ public class SignupActivity extends AppCompatActivity {
         ActionBar AB = getSupportActionBar();
         AB.setDisplayHomeAsUpEnabled(true);
 
-        etUsername = findViewById(R.id.editTextFullname);
-        etPhone = findViewById(R.id.editTextPhone);
+        etFullName = findViewById(R.id.editTextFullname);
         etEmail = findViewById(R.id.editTextEmail);
         etPass = findViewById(R.id.editTextPassword);
         etCfmpass = findViewById(R.id.editTextPasswordCfm);
         btnSubmit = findViewById(R.id.buttonSubmit);
-        db = new DBHelper(this);
+        client = new AsyncHttpClient();
+
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String user = etUsername.getText().toString().trim();
-                String phone = etPhone.getText().toString().trim();
-                String email = etEmail.getText().toString().trim();
-                String pass = etPass.getText().toString().trim();
-                String cfmpass = etCfmpass.getText().toString();
+                name = etFullName.getText().toString().trim();
+                email = etEmail.getText().toString().trim();
+                pass = etPass.getText().toString().trim();
+                cfmpass = etCfmpass.getText().toString();
 
-                if (validateUsername() && validatePhone() && validateEmail() && validatePassword() && pass.equals(cfmpass)) {
-                    long value = db.registerUser(user, phone, email, pass);
+                if (validateFullname() && validateEmail() && validatePassword() && pass.equals(cfmpass)) {
 
-                    if (value > 0) {
-                        toastMsg("Sign Up successful!");
-                        Intent i = new Intent(SignupActivity.this, MainActivity.class);
-                        startActivity(i);
-                    } else {
-                        toastMsg("There are incompleted fields");
-                    }
+                    // proceed to authenticate user
+                    // TODO: call doLogin web service to authenticate use
+                    String url = "http://10.0.2.2/FYPCleanerAdmin/register.php";
+                    RequestParams params = new RequestParams();
+                    params.add("full_name", name);
+                    params.add("email", email);
+                    params.add("password", pass);
+
+                    client.post(url, params, new JsonHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                            try {
+                                Boolean authenticated = response.getBoolean("authenticated");
+                                if (authenticated == true) {
+
+                                    Intent intent = new Intent(SignupActivity.this,MainActivity.class);
+                                    intent.putExtra("full_name",name);
+                                    intent.putExtra("email",email);
+                                    intent.putExtra("password",pass);
+                                    startActivity(intent);
+
+                                    Toast.makeText(SignupActivity.this, "Register Successfull", Toast.LENGTH_LONG).show();
+
+
+                                } else {
+                                    Toast.makeText(SignupActivity.this, "Register failed. Please check your login credentials", Toast.LENGTH_LONG);
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                } else {
+                    toastMsg("There are incompleted fields");
                 }
             }
+
         });
     }
 
@@ -121,35 +160,32 @@ public class SignupActivity extends AppCompatActivity {
         }
     }
 
-    private boolean validateUsername() {
-        String usernameInput = etUsername.getText().toString().trim();
+    private boolean validateFullname() {
+        String usernameInput = etFullName.getText().toString().trim();
 
         if (usernameInput.isEmpty()) {
-            etUsername.setError("Field is required");
-            return false;
-        } else if (usernameInput.length() > 20) {
-            etUsername.setError("Max 20 characters");
+            etFullName.setError("Field is required");
             return false;
         } else {
-            etUsername.setError(null);
+            etFullName.setError(null);
             return true;
         }
     }
-
-    private boolean validatePhone() {
-        String phone = etPhone.getText().toString().trim();
-
-        if (phone.isEmpty()) {
-            etPhone.setError("Field is required");
-            return false;
-        } else if (!PHONE_PATTERN.matcher(phone).matches() && phone.length() != 8) { // change
-            etPhone.setError("Must start with 8 or 9 with 8 digits ");
-            return false;
-        } else {
-            etPhone.setError(null);
-            return true;
-        }
-    }
+//
+//    private boolean validatePhone() {
+//        String phone = etPhone.getText().toString().trim();
+//
+//        if (phone.isEmpty()) {
+//            etPhone.setError("Field is required");
+//            return false;
+//        } else if (!PHONE_PATTERN.matcher(phone).matches() && phone.length() != 8) { // change
+//            etPhone.setError("Must start with 8 or 9 with 8 digits ");
+//            return false;
+//        } else {
+//            etPhone.setError(null);
+//            return true;
+//        }
+//    }
 
 
 
