@@ -1,6 +1,7 @@
 package sg.edu.rp.c300.cleanerbooking;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,6 +17,9 @@ public class ServiceBookingActivity extends AppCompatActivity {
     private ActionBar titlebar;
     ImageView iv;
     Button btn;
+    SharedPreferences pref;
+    SharedPreferences.Editor prefedit;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,12 +33,18 @@ public class ServiceBookingActivity extends AppCompatActivity {
         titlebar = getSupportActionBar();
         titlebar.setTitle("Service");
 
+
         iv = findViewById(R.id.imageView2);
 
         tv=findViewById(R.id.textViewName);
         Intent i = getIntent();
         Service service = (Service)i.getSerializableExtra("service");
         tv.setText(service.getName() + "\n" + service.getDescription());
+
+        pref = getSharedPreferences("mybooking",MODE_PRIVATE);
+        prefedit = pref.edit();
+        prefedit.putString("servicename",service.getName());
+        prefedit.commit();
 
         btn = findViewById(R.id.button);
 

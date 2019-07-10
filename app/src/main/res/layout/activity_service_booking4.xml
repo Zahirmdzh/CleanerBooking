@@ -10,7 +10,7 @@
     <include layout="@layout/toolbar"/>
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/textViewServiceName"
         android:textSize="30sp"
         android:gravity="center"
         android:layout_width="match_parent"

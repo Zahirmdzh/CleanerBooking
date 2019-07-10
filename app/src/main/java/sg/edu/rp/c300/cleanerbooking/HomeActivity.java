@@ -233,6 +233,7 @@ public class HomeActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
     public void addToService() {
 
         alService = new ArrayList<Service>();
