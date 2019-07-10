@@ -1,17 +1,29 @@
 package sg.edu.rp.c300.cleanerbooking;
 
+import android.content.AbstractThreadedSyncAdapter;
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.regex.Pattern;
+
+import cz.msebera.android.httpclient.Header;
 
 
 public class SignupActivity extends AppCompatActivity {
@@ -33,6 +45,8 @@ public class SignupActivity extends AppCompatActivity {
 
     EditText etFullName, etEmail, etPass, etCfmpass;
     Button btnSubmit;
+    private AsyncHttpClient client;
+    private String name,email,pass,cfmpass;
 
 
     @Override
@@ -49,29 +63,55 @@ public class SignupActivity extends AppCompatActivity {
         etPass = findViewById(R.id.editTextPassword);
         etCfmpass = findViewById(R.id.editTextPasswordCfm);
         btnSubmit = findViewById(R.id.buttonSubmit);
+        client = new AsyncHttpClient();
 
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String name = etFullName.getText().toString().trim();
-                String email = etEmail.getText().toString().trim();
-                String pass = etPass.getText().toString().trim();
-                String cfmpass = etCfmpass.getText().toString();
+                name = etFullName.getText().toString().trim();
+                email = etEmail.getText().toString().trim();
+                pass = etPass.getText().toString().trim();
+                cfmpass = etCfmpass.getText().toString();
 
                 if (validateFullname() && validateEmail() && validatePassword() && pass.equals(cfmpass)) {
-                    //long value = db.registerUser(user, phone, email, pass);
-                    String type="reg";
-                    BackgroundTask backgroundTask= new BackgroundTask(getApplicationContext());
-                    backgroundTask.execute(type, name, email, pass);
 
-                        toastMsg("Sign Up successful!");
-                        Intent i = new Intent(SignupActivity.this, MainActivity.class);
-                        startActivity(i);
-                    } else {
-                        toastMsg("There are incompleted fields");
-                    }
+                    // proceed to authenticate user
+                    // TODO: call doLogin web service to authenticate use
+                    String url = "http://10.0.2.2/FYPCleanerAdmin/register.php";
+                    RequestParams params = new RequestParams();
+                    params.add("full_name", name);
+                    params.add("email", email);
+                    params.add("password", pass);
+
+                    client.post(url, params, new JsonHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                            try {
+                                Boolean authenticated = response.getBoolean("authenticated");
+                                if (authenticated == true) {
+
+                                    Intent intent = new Intent(SignupActivity.this,MainActivity.class);
+                                    intent.putExtra("full_name",name);
+                                    intent.putExtra("email",email);
+                                    intent.putExtra("password",pass);
+                                    startActivity(intent);
+
+                                    Toast.makeText(SignupActivity.this, "Register Successfull", Toast.LENGTH_LONG).show();
+
+
+                                } else {
+                                    Toast.makeText(SignupActivity.this, "Register failed. Please check your login credentials", Toast.LENGTH_LONG);
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                } else {
+                    toastMsg("There are incompleted fields");
                 }
+            }
 
         });
     }
