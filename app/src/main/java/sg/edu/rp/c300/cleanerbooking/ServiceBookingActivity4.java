@@ -1,7 +1,10 @@
 package sg.edu.rp.c300.cleanerbooking;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -15,6 +18,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -32,8 +36,9 @@ public class ServiceBookingActivity4 extends AppCompatActivity {
     SharedPreferences pref;
     SharedPreferences.Editor prefedit;
     Button btnConfirm;
-    String time,date,dateString,address,contact,fname,lname,email,servicename, type,request;
+    String time,date,dateString,address,contact,fname,lname,fullname, email,servicename, type,request;
     private AsyncHttpClient client;
+    Date d;
 
 
     @Override
@@ -75,6 +80,7 @@ public class ServiceBookingActivity4 extends AppCompatActivity {
             servicename = pref.getString("servicename","");
             type = pref.getString("type","");
             request = pref.getString("request","");
+            fullname = fname + " " + lname;
 
 
             tvServicename.setText(servicename);
@@ -87,7 +93,6 @@ public class ServiceBookingActivity4 extends AppCompatActivity {
             tvEmail.setText(email);
             tvType.setText(type);
             tvReq.setText(request);
-
 
 
             if (!date.isEmpty() && !time.isEmpty()) {
@@ -106,15 +111,44 @@ public class ServiceBookingActivity4 extends AppCompatActivity {
 
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(final View v) {
 
 
-                btnCreateOnClick(v);
+                AlertDialog.Builder builder = new AlertDialog.Builder(ServiceBookingActivity4.this);
+
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
 
 
-                prefedit = getApplicationContext().getSharedPreferences("mybooking",MODE_PRIVATE).edit();
-                prefedit.clear();
-                prefedit.commit();
+                        btnCreateOnClick(v);
+
+
+                        prefedit = getApplicationContext().getSharedPreferences("mybooking",MODE_PRIVATE).edit();
+                        prefedit.clear();
+                        prefedit.commit();
+
+                    }
+                });
+
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+
+                AlertDialog myDialog = builder.create();
+
+                myDialog.setMessage("Are you sure you want to make this booking?");
+                myDialog.setTitle("Confirm");
+
+                myDialog.show();
+
+
+
+
+
             }
         });
     }
@@ -123,7 +157,7 @@ public class ServiceBookingActivity4 extends AppCompatActivity {
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
         try {
-            Date d = sdf.parse(date + time);
+            d = sdf.parse(date + time);
 
             Log.d("DATETIME", String.valueOf(d));
         } catch (ParseException ex) {
@@ -131,8 +165,7 @@ public class ServiceBookingActivity4 extends AppCompatActivity {
         }
 
         RequestParams params = new RequestParams();
-        params.add("first_name", fname);
-        params.add("last_name", lname);
+        params.add("fullname", fullname);
         params.add("mobile", contact);
         params.add("address_postal_code", address);
         params.add("email", email);
@@ -145,6 +178,7 @@ public class ServiceBookingActivity4 extends AppCompatActivity {
 
                 try {
                     Log.i("JSON Results: ", response.toString());
+
 
                     Toast.makeText(getApplicationContext(), response.getString("message"), Toast.LENGTH_SHORT).show();
                     finish();

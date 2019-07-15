@@ -3,6 +3,7 @@
     package="sg.edu.rp.c300.cleanerbooking">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
 
     <application
         android:allowBackup="true"
@@ -13,9 +14,33 @@
         android:theme="@style/AppTheme.NoActionBar">
         <activity android:name=".ForgotPassword"></activity>
         <activity android:name=".FinishBookingActivity" />
-        <activity android:name=".ServiceBookingActivity4" />
-        <activity android:name=".ServiceBookingActivity3" />
-        <activity android:name=".ServiceBookingActivity2" />
+        <activity
+            android:name=".ServiceBookingActivity4"
+            android:label="Confirm Booking"
+            android:parentActivityName=".ServiceBookingActivity3">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ServiceBookingActivity3" />
+        </activity>
+
+        <activity
+            android:name=".ServiceBookingActivity3"
+            android:label="Fill Contact"
+            android:parentActivityName=".ServiceBookingActivity2">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ServiceBookingActivity2" />
+
+        </activity>
+        <activity
+            android:name=".ServiceBookingActivity2"
+            android:label="Select Details"
+            android:parentActivityName=".HomeActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeActivity" />
+
+        </activity>
         <activity
             android:name=".ServiceBookingActivity"
             android:label="Service"
