@@ -98,13 +98,11 @@
         android:id="@+id/textViewRegistrationNo"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="14dp"
-        android:text="TextView"
+        android:text="201708591W"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5"
-        tools:text="201708591W" />
+        app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
 
     <TextView
