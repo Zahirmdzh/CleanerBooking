@@ -20,7 +20,7 @@ public class ViewBookingActivity extends AppCompatActivity {
     private ActionBar titlebar;
     ListView lv;
     ArrayAdapter aa;
-    ArrayList<Booking> booking;
+    ArrayList<Booking> alBooking;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -34,6 +34,7 @@ public class ViewBookingActivity extends AppCompatActivity {
                     return true;
                 case R.id.navigation_booking:
                     titlebar.setTitle("Booking");
+
                     return true;
                 case R.id.navigation_redeem:
                     titlebar.setTitle("Redeem");

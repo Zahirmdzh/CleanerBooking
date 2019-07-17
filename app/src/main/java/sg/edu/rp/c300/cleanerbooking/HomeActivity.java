@@ -73,14 +73,49 @@ public class HomeActivity extends AppCompatActivity {
 
                     alBooking = new ArrayList<Booking>();
 
-                    Booking itemB1 = new Booking("Home Booking", "22/04/2019");
-                    Booking itemB2 = new Booking("Home Booking", "12/06/2021");
-
-                    alBooking.add(itemB1);
-                    alBooking.add(itemB2);
+                    //Booking itemB1 = new Booking("Home Booking", "22/04/2019");
+                    //Booking itemB2 = new Booking("Home Booking", "12/06/2021");
+                    //alBooking.add(itemB1);
+                    //alBooking.add(itemB2);
 
                     book = new BookingAdapter(HomeActivity.this, R.layout.booking_row, alBooking);
                     lv.setAdapter(book);
+
+                    AsyncHttpClient client = new AsyncHttpClient();
+                    client.get("http://10.0.2.2/FYPCleanerAdmin/getBooking.php", new JsonHttpResponseHandler() {
+
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+
+                            try {
+                                for (int i = 0; i < response.length(); i++) {
+
+                                    JSONObject booking = response.getJSONObject(i);
+                                    String  bokingId= booking.getString("booking_id");
+                                    String serviceName = booking.getString("booking_service");
+                                    String dateTime = booking.getString("booking_date_time");
+                                    String status = booking.getString("booking_status");
+                                    Booking b = new Booking(bokingId, serviceName, dateTime, status);
+                                    alBooking.add(b);
+                                }
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            book.notifyDataSetChanged();
+                        }
+                    });
+
+                    lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
+                            Booking bookingSelected = alBooking.get(pos);  // Get the selected Category
+                            Intent intent = new Intent(HomeActivity.this, ViewBookingActivity.class);
+                            intent.putExtra("booking", bookingSelected);
+                            startActivity(intent);
+                        }
+                    });
+
                     return true;
 
                 case R.id.navigation_redeem:
@@ -102,8 +137,8 @@ public class HomeActivity extends AppCompatActivity {
                     aaReward = new RewardAdapter(HomeActivity.this,R.layout.reward_row,alReward);
                     lv.setAdapter(aaReward);
 
-                    AsyncHttpClient client = new AsyncHttpClient();
-                    client.get("http://10.0.2.2/FYPCleanerAdmin/getRewards.php", new JsonHttpResponseHandler() {
+                    AsyncHttpClient client1 = new AsyncHttpClient();
+                    client1.get("http://10.0.2.2/FYPCleanerAdmin/getRewards.php", new JsonHttpResponseHandler() {
 
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
@@ -199,6 +234,8 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
     }
+
+
 
 
     public void clickLV(View view) {

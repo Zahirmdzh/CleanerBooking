@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.webkit.WebView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -20,7 +22,6 @@ public class ProfileActivity extends AppCompatActivity {
     private ActionBar titlebar;
     ArrayAdapter aa;
     ArrayList<Profile> alProfile;
-
 
     ListView lv;
     TextView tvName;
@@ -37,6 +38,7 @@ public class ProfileActivity extends AppCompatActivity {
 
 
         lv = findViewById(R.id.lv);
+        btnLogout = findViewById(R.id.btnLogout);
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
@@ -57,6 +59,15 @@ public class ProfileActivity extends AppCompatActivity {
 
         aa = new ProfileAdapter(ProfileActivity.this, R.layout.profile_row, alProfile);
         lv.setAdapter(aa);
+
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+                Intent intent = new Intent(ProfileActivity.this,MainActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 }

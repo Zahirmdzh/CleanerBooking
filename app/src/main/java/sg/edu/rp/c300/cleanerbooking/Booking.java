@@ -1,20 +1,38 @@
 package sg.edu.rp.c300.cleanerbooking;
 
-public class Booking {
+import java.io.Serializable;
 
-    private String name;
-    private String date;
+public class Booking implements Serializable {
 
-    public Booking(String name, String date) {
-        this.name = name;
-        this.date = date;
+    private String id;
+    private String service;
+    private String dateTime;
+    private String status;
+
+    public Booking(String id,String service, String dateTime, String status) {
+        this.id = id;
+        this.service = service;
+        this.dateTime = dateTime;
+        this.status = status;
     }
 
-    public String getName() {
-        return name;
+    public String getId() {
+        return id;
     }
 
-    public String getDate() {
-        return date;
+    public String getService() {
+        return service;
+    }
+
+    public String getDateTime() {
+        return dateTime;
+    }
+
+    public String getStatus() {
+        return status;
     }
 }
+
+
+
+
