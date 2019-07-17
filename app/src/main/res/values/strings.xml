@@ -23,4 +23,31 @@
     <string name="contactHint">Contact Us with your enquiries...</string>
 
 
+    <string-array name="weekItem">
+        <item>Until Next Week</item>
+        <item>Until Next 2 Weeks</item>
+        <item>Until Next 3 Weeks</item>
+        <item>Until Next 4 Weeks</item>
+        <item>Until Next 5 Weeks</item>
+        <item>Until Next 6 Weeks</item>
+        <item>Until Next 7 Weeks</item>
+        <item>Until Next 8 Weeks</item>
+        <item>Until Next 9 Weeks</item>
+        <item>Until Next 10 Weeks</item>
+    </string-array>
+
+    <string-array name="monthItem">
+        <item>Until Next Month</item>
+        <item>Until Next 2 Months</item>
+        <item>Until Next 3 Months</item>
+        <item>Until Next 4 Months</item>
+        <item>Until Next 5 Months</item>
+        <item>Until Next 6 Months</item>
+        <item>Until Next 7 Months</item>
+        <item>Until Next 8 Months</item>
+        <item>Until Next 9 Months</item>
+        <item>Until Next 10 Months</item>
+    </string-array>
+
+
 </resources>
