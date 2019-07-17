@@ -135,7 +135,7 @@
             android:text="Start Time:" />
 
         <TextView
-            android:id="@+id/textViewTime"
+            android:id="@+id/textViewStartTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"

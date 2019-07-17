@@ -3,7 +3,7 @@
     package="sg.edu.rp.c300.cleanerbooking">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:allowBackup="true"
@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".ForgotPassword"></activity>
+        <activity android:name=".RescheduleBookingActivity"></activity>
+        <activity android:name=".ForgotPassword" />
         <activity android:name=".FinishBookingActivity" />
         <activity
             android:name=".ServiceBookingActivity4"
@@ -22,7 +23,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ServiceBookingActivity3" />
         </activity>
-
         <activity
             android:name=".ServiceBookingActivity3"
             android:label="Fill Contact"
@@ -30,7 +30,6 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ServiceBookingActivity2" />
-
         </activity>
         <activity
             android:name=".ServiceBookingActivity2"
@@ -39,7 +38,6 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".HomeActivity" />
-
         </activity>
         <activity
             android:name=".ServiceBookingActivity"

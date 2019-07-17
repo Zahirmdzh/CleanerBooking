@@ -36,9 +36,7 @@ public class BookingAdapter extends ArrayAdapter<Booking> {
 
         Booking currenTask = booking.get(position);
 
-        for (int i=0;i<booking.size();i++) {
-//            number.setText(i);
-        }
+
         name.setText(currenTask.getName());
         date.setText(currenTask.getDate());
 

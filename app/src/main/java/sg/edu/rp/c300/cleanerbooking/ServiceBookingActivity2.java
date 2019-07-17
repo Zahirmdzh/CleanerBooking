@@ -21,12 +21,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 
 import static android.view.View.GONE;
@@ -60,7 +57,7 @@ public class ServiceBookingActivity2 extends AppCompatActivity {
         prefedit = pref.edit();
 
         btnNext = findViewById(R.id.buttonConfirm);
-        tvTime = findViewById(R.id.textViewTime);
+        tvTime = findViewById(R.id.textViewStartTime);
         spn = findViewById(R.id.spinnerDate);
         rg = findViewById(R.id.rg);
         rb1 = findViewById(R.id.radioButton);

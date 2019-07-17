@@ -1,7 +1,7 @@
 package sg.edu.rp.c300.cleanerbooking;
 
+import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -18,13 +18,11 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.text.ParseException;
-import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -33,8 +31,8 @@ import cz.msebera.android.httpclient.Header;
 public class ServiceBookingActivity4 extends AppCompatActivity {
 
     TextView tvTime,tvDate, tvAddress,tvContact,tvFname,tvLname,tvEmail, tvServicename, tvType,tvReq;
-    SharedPreferences pref;
-    SharedPreferences.Editor prefedit;
+    SharedPreferences pref, pref2;
+    SharedPreferences.Editor prefedit, prefEdit2;
     Button btnConfirm;
     String time,date,dateString,address,contact,fname,lname,fullname, email,servicename, type,request;
     private AsyncHttpClient client;
@@ -51,10 +49,13 @@ public class ServiceBookingActivity4 extends AppCompatActivity {
         ActionBar AB = getSupportActionBar();
         AB.setDisplayHomeAsUpEnabled(true);
 
+        pref2 = getSharedPreferences("pref2", Context.MODE_PRIVATE);
+        prefEdit2 = pref2.edit();
+
         client = new AsyncHttpClient();
 
         tvServicename = findViewById(R.id.textViewServiceName);
-        tvTime = findViewById(R.id.textViewTime);
+        tvTime = findViewById(R.id.textViewStartTime);
         tvDate = findViewById(R.id.textViewDate);
         tvAddress = findViewById(R.id.textViewAddress);
         tvContact = findViewById(R.id.textViewContact);
@@ -127,6 +128,9 @@ public class ServiceBookingActivity4 extends AppCompatActivity {
                         prefedit = getApplicationContext().getSharedPreferences("mybooking",MODE_PRIVATE).edit();
                         prefedit.clear();
                         prefedit.commit();
+
+                        prefEdit2.putString("email",email);
+                        prefEdit2.commit();
 
                     }
                 });
