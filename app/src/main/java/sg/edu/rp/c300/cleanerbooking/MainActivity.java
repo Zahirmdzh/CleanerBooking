@@ -1,5 +1,6 @@
 package sg.edu.rp.c300.cleanerbooking;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
@@ -31,6 +32,9 @@ public class MainActivity extends AppCompatActivity {
     EditText etEmail, etPass;
     private Session session;
     private AsyncHttpClient client;
+    SharedPreferences myPref;
+    SharedPreferences.Editor prefEdit;
+    private String member_id;
 
 
     @Override
@@ -46,6 +50,9 @@ public class MainActivity extends AppCompatActivity {
         etPass = findViewById(R.id.editTextPassword);
         session = new Session(this);
         client = new AsyncHttpClient();
+        myPref = getSharedPreferences("myPref", Context.MODE_PRIVATE);
+        prefEdit = myPref.edit();
+
 
         if(session.loggedinStatus()){
             startActivity(new Intent(MainActivity.this,HomeActivity.class));
@@ -92,14 +99,22 @@ public class MainActivity extends AppCompatActivity {
                         public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                             try {
                                 Boolean authenticated = response.getBoolean("authenticated");
+
                                 Log.d("AUTHENTIC",authenticated.toString());
                                 if (authenticated == true) {
 
                                     Intent intent = new Intent(MainActivity.this,HomeActivity.class);
-                                    intent.putExtra("email",email);
-                                    intent.putExtra("password",pass);
-                                    startActivity(intent);
+                                    //member_id = response.getString("member_id");
+                                    //Log.d("member_id",member_id);
 
+                                    //intent.putExtra("email",email);
+                                    //intent.putExtra("password",pass);
+
+
+                                    prefEdit.putString("member_id",member_id);
+                                    prefEdit.commit();
+
+                                    startActivity(intent);
                                     Toast.makeText(MainActivity.this, "Login Successfull", Toast.LENGTH_LONG).show();
 
 

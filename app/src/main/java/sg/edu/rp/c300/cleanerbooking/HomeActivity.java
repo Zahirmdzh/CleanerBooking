@@ -1,8 +1,6 @@
 package sg.edu.rp.c300.cleanerbooking;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.ActionBar;
@@ -10,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.annotation.NonNull;
 
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -24,7 +21,6 @@ import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -48,12 +44,12 @@ public class HomeActivity extends AppCompatActivity {
 
     ArrayAdapter aaReward;
     ArrayList<Reward> alReward;
+    ListView lvReward;
 
     ArrayAdapter profile;
     ArrayList<Profile> alRecord;
-
-  SharedPreferences pref2;
-  SharedPreferences.Editor prefEdit2;
+//  SharedPreferences pref = getSharedPreferences("app",MODE_PRIVATE);
+//  String msg = pref.getString("email","");
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -75,47 +71,31 @@ public class HomeActivity extends AppCompatActivity {
                     mTextMessage.setText(R.string.title_booking);
                     titlebar.setTitle("Booking");
 
-             /*       alBooking = new ArrayList<Booking>();
-
-                    Booking itemB1 = new Booking("Home Booking", "22/04/2019");
-                    Booking itemB2 = new Booking("Home Booking", "12/06/2021");
-
-                    alBooking.add(itemB1);
-                    alBooking.add(itemB2);
-
-                    book = new BookingAdapter(HomeActivity.this, R.layout.booking_row, alBooking);
-                    lv.setAdapter(book);*/
-
                     alBooking = new ArrayList<Booking>();
+
+                    //Booking itemB1 = new Booking("Home Booking", "22/04/2019");
+                    //Booking itemB2 = new Booking("Home Booking", "12/06/2021");
+                    //alBooking.add(itemB1);
+                    //alBooking.add(itemB2);
+
                     book = new BookingAdapter(HomeActivity.this, R.layout.booking_row, alBooking);
                     lv.setAdapter(book);
 
-
-                /*    pref2 = getSharedPreferences("pref2", Context.MODE_PRIVATE);
-
-                    String email = pref2.getString("email","");
-                    Log.d("EMAIL",email);
-
-                    AsyncHttpClient client2 = new AsyncHttpClient();
-                    RequestParams params = new RequestParams();
-                    params.put("email",email);
-
-                    client2.post("http://10.0.2.2/FYPCleanerAdmin/getBookingToAndroidByEmail.php",params, new JsonHttpResponseHandler() {
+                    AsyncHttpClient client = new AsyncHttpClient();
+                    client.get("http://10.0.2.2/FYPCleanerAdmin/getBooking.php", new JsonHttpResponseHandler() {
 
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
 
-
                             try {
-                                for (int i = 0; i <response.length();i++) {
-                                    JSONObject booking = response.getJSONObject(i);
-                                    int id = booking.getInt("booking_id");
-                                    String name = booking.getString("booking_service");
-                                    String date = booking.getString("booking_date_time");
-                                    String status = booking.getString("booking_status");
-                                    Log.d("DATEFOR",date);
+                                for (int i = 0; i < response.length(); i++) {
 
-                                    Booking b = new Booking(id,name,date,status);
+                                    JSONObject booking = response.getJSONObject(i);
+                                    String  bokingId= booking.getString("booking_id");
+                                    String serviceName = booking.getString("booking_service");
+                                    String dateTime = booking.getString("booking_date_time");
+                                    String status = booking.getString("booking_status");
+                                    Booking b = new Booking(bokingId, serviceName, dateTime, status);
                                     alBooking.add(b);
                                 }
 
@@ -129,14 +109,12 @@ public class HomeActivity extends AppCompatActivity {
                     lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
-                            Booking bookingSelected = alBooking.get(pos);  // Get the selected Booking
+                            Booking bookingSelected = alBooking.get(pos);  // Get the selected Category
                             Intent intent = new Intent(HomeActivity.this, ViewBookingActivity.class);
-
-
-                            intent.putExtra("booking",bookingSelected);
+                            intent.putExtra("booking", bookingSelected);
                             startActivity(intent);
                         }
-                    });*/
+                    });
 
                     return true;
 
@@ -159,8 +137,8 @@ public class HomeActivity extends AppCompatActivity {
                     aaReward = new RewardAdapter(HomeActivity.this,R.layout.reward_row,alReward);
                     lv.setAdapter(aaReward);
 
-                    AsyncHttpClient client = new AsyncHttpClient();
-                    client.get("http://10.0.2.2/FYPCleanerAdmin/getRewards.php", new JsonHttpResponseHandler() {
+                    AsyncHttpClient client1 = new AsyncHttpClient();
+                    client1.get("http://10.0.2.2/FYPCleanerAdmin/getRewards.php", new JsonHttpResponseHandler() {
 
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
@@ -256,6 +234,8 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
     }
+
+
 
 
     public void clickLV(View view) {
