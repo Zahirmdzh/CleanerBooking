@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -81,8 +82,14 @@ public class HomeActivity extends AppCompatActivity {
                     book = new BookingAdapter(HomeActivity.this, R.layout.booking_row, alBooking);
                     lv.setAdapter(book);
 
+                    Intent intent = getIntent();
+
                     AsyncHttpClient client = new AsyncHttpClient();
-                    client.get("http://10.0.2.2/FYPCleanerAdmin/getBooking.php", new JsonHttpResponseHandler() {
+                    RequestParams params = new RequestParams();
+                    params.put("email",intent.getStringExtra("email"));
+
+
+                    client.get("http://10.0.2.2/FYPCleanerAdmin/getBookingAndroid.php",params, new JsonHttpResponseHandler() {
 
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, JSONArray response) {

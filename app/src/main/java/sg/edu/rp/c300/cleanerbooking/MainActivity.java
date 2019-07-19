@@ -79,6 +79,10 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 final String email = etEmail.getText().toString();
                 final String pass = etPass.getText().toString();
+                Intent intent = new Intent();
+                intent.putExtra("email",email);
+                startActivity(intent);
+
 
                 if (email.equalsIgnoreCase("")) {
                     Toast.makeText(MainActivity.this, "Login failed. Please enter email.", Toast.LENGTH_LONG).show();
