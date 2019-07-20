@@ -155,12 +155,29 @@
                 android:background="@drawable/inputbox"
                 android:text="TextView" />
 
-            <Button
-                android:id="@+id/buttonConfirm"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:text="Reschedule Booking" />
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/buttonCancel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_weight="0.5"
+                    android:text="Cancel booking" />
+
+                <Button
+                    android:id="@+id/buttonReschedule"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_weight="0.5"
+                    android:text="Reschedule" />
+
+            </LinearLayout>
+
         </LinearLayout>
 
     </LinearLayout>

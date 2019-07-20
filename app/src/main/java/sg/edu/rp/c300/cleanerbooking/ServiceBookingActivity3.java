@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import static android.view.View.GONE;
+
 public class ServiceBookingActivity3 extends AppCompatActivity {
 
     Button btnNext;
@@ -35,6 +37,16 @@ public class ServiceBookingActivity3 extends AppCompatActivity {
         etEmail = findViewById(R.id.editTextEmail);
         etPhone = findViewById(R.id.editTextPhone);
         etAddress = findViewById(R.id.editTextAddress);
+
+        Session session = new Session(this);
+        if (session.loggedinStatus() == true) {
+            etFname.setVisibility(GONE);
+            etLname.setVisibility(GONE);
+            etEmail.setVisibility(GONE);
+            etPhone.setVisibility(GONE);
+        }
+
+
 
         pref = getSharedPreferences("mybooking",MODE_PRIVATE);
         prefedit = pref.edit();

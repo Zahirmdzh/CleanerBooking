@@ -32,7 +32,7 @@ import static android.view.View.VISIBLE;
 public class ServiceBookingActivity2 extends AppCompatActivity {
 
     EditText etReq;
-    TextView tvTime,tvDate;
+    TextView tvTime,tvDate, tvType;
     int theHour, theMin, theYear,theMonth,theDay;
     Button btnNext;
     SharedPreferences pref;
@@ -42,6 +42,7 @@ public class ServiceBookingActivity2 extends AppCompatActivity {
     RadioButton rb1,rb2,rb3;
     ArrayList<String> aLItems;
     ArrayAdapter<String> aaItems;
+    private Session session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,10 @@ public class ServiceBookingActivity2 extends AppCompatActivity {
         ActionBar AB = getSupportActionBar();
         AB.setDisplayHomeAsUpEnabled(true);
 
+        tvType = findViewById(R.id.textViewType);
+
+
+        //create mybooking.xml file
         pref = getSharedPreferences("mybooking",MODE_PRIVATE);
         prefedit = pref.edit();
 
@@ -65,6 +70,12 @@ public class ServiceBookingActivity2 extends AppCompatActivity {
         rb3 = findViewById(R.id.radioButton3);
         etReq = findViewById(R.id.editTextRequests);
 
+        session = new Session(this);
+        if(session.loggedinStatus() == false) {
+            rg.setVisibility(GONE);
+            tvType.setVisibility(GONE);
+        }
+
         aLItems = new ArrayList<>();
         // create an array adapter using default spinner layout
         aaItems = new ArrayAdapter<>(this,android.R.layout.simple_spinner_dropdown_item,aLItems);
@@ -72,6 +83,10 @@ public class ServiceBookingActivity2 extends AppCompatActivity {
         spn.setAdapter(aaItems);
 
         spn.setVisibility(GONE);
+        Log.d("RB1ONCREATE",rb1.getText().toString());
+        prefedit.putString("type",rb1.getText().toString());
+        prefedit.commit();
+
         rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -79,6 +94,10 @@ public class ServiceBookingActivity2 extends AppCompatActivity {
 
                 if (rg.getCheckedRadioButtonId() == rb1.getId())  {
                     spn.setVisibility(GONE);
+                    Log.d("RB1TEXT",rb1.getText().toString());
+                    prefedit.putString("type",rb1.getText().toString());
+                    prefedit.commit();
+
                 } else {
                     spn.setVisibility(VISIBLE);
 

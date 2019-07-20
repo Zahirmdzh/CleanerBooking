@@ -8,12 +8,14 @@ public class Booking implements Serializable {
     private String service;
     private String dateTime;
     private String status;
+    private String request;
 
-    public Booking(String id,String service, String dateTime, String status) {
+    public Booking(String id,String service, String dateTime, String status, String request) {
         this.id = id;
         this.service = service;
         this.dateTime = dateTime;
         this.status = status;
+        this.request = request;
     }
 
     public String getId() {
@@ -31,6 +33,11 @@ public class Booking implements Serializable {
     public String getStatus() {
         return status;
     }
+
+    public String getRequest() {
+        return request;
+    }
+
 }
 
 

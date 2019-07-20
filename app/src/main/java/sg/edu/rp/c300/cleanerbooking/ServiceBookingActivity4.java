@@ -2,6 +2,7 @@ package sg.edu.rp.c300.cleanerbooking;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -11,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,15 +30,19 @@ import java.util.Date;
 
 import cz.msebera.android.httpclient.Header;
 
+import static android.view.View.GONE;
+
 public class ServiceBookingActivity4 extends AppCompatActivity {
 
-    TextView tvTime,tvDate, tvAddress,tvContact,tvFname,tvLname,tvEmail, tvServicename, tvType,tvReq;
-    SharedPreferences pref, pref2;
-    SharedPreferences.Editor prefedit, prefEdit2;
+    TextView tvTime, tvDate, tvAddress, tvContact, tvFname, tvLname, tvEmail, tvServicename, tvType, tvReq, tv11;
+    SharedPreferences prefKey;
+    SharedPreferences.Editor prefedit;
     Button btnConfirm;
-    String time,date,dateString,address,contact,fname,lname,fullname, email,servicename, type,request;
+    String time, date, dateString, address, contact, fname, lname, fullname, email, servicename, type, request, key;
     private AsyncHttpClient client;
     Date d;
+    private Session session;
+    LinearLayout layoutContact,layoutFname,layoutLname,layoutEmail;
 
 
     @Override
@@ -49,8 +55,17 @@ public class ServiceBookingActivity4 extends AppCompatActivity {
         ActionBar AB = getSupportActionBar();
         AB.setDisplayHomeAsUpEnabled(true);
 
-        pref2 = getSharedPreferences("pref2", Context.MODE_PRIVATE);
-        prefEdit2 = pref2.edit();
+        layoutContact = findViewById(R.id.layoutC);
+        layoutFname = findViewById(R.id.layoutF);
+        layoutLname = findViewById(R.id.layoutL);
+        layoutEmail = findViewById(R.id.layoutE);
+
+        prefKey = getSharedPreferences("APP", Context.MODE_PRIVATE);
+        key = prefKey.getString("uniquekey", "");
+
+
+        SharedPreferences prefMember = getSharedPreferences("pref2", MODE_PRIVATE);
+
 
         client = new AsyncHttpClient();
 
@@ -62,26 +77,32 @@ public class ServiceBookingActivity4 extends AppCompatActivity {
         tvFname = findViewById(R.id.textViewFname);
         tvLname = findViewById(R.id.textViewLname);
         tvEmail = findViewById(R.id.textViewEmail);
-        tvType = findViewById(R.id.textViewType);
+        tvType = findViewById(R.id.textView65);
         tvReq = findViewById(R.id.textViewRequest);
+
+        session = new Session(this);
+        //text view type
+        tv11 = findViewById(R.id.textView11);
+
 
         File f = new File(
                 "/data/data/sg.edu.rp.c300.cleanerbooking/shared_prefs/mybooking.xml");
         if (f.exists()) {
-            pref = getSharedPreferences("mybooking", MODE_PRIVATE);
+            SharedPreferences pref = getSharedPreferences("mybooking", MODE_PRIVATE);
 
-            time = pref.getString("mytime","");
-            date = pref.getString("mydate","");
+            time = pref.getString("mytime", "");
+            date = pref.getString("mydate", "");
 
-            address = pref.getString("address","");
-            contact = pref.getString("contact","");
-            fname = pref.getString("fname","");
-            lname = pref.getString("lname","");
-            email = pref.getString("email","");
-            servicename = pref.getString("servicename","");
-            type = pref.getString("type","");
-            request = pref.getString("request","");
+            address = pref.getString("address", "");
+            contact = pref.getString("contact", "");
+            fname = pref.getString("fname", "");
+            lname = pref.getString("lname", "");
+            servicename = pref.getString("servicename", "");
+            type = pref.getString("type", "");
+            request = pref.getString("request", "");
             fullname = fname + " " + lname;
+
+            Log.d("STATUSLOGIN",String.valueOf(session.loggedinStatus()));
 
 
             tvServicename.setText(servicename);
@@ -91,10 +112,30 @@ public class ServiceBookingActivity4 extends AppCompatActivity {
             tvContact.setText(contact);
             tvFname.setText(fname);
             tvLname.setText(lname);
-            tvEmail.setText(email);
-            tvType.setText(type);
-            tvReq.setText(request);
 
+            tvReq.setText(request);
+            tvType.setText(type);
+
+            if (session.loggedinStatus() == false) {
+                tv11.setVisibility(GONE);
+                tvType.setVisibility(GONE);
+
+                email = pref.getString("email", "");
+                tvEmail.setText(email);
+                Log.d("GUEST EMAIL", email);
+
+
+            } else {
+                layoutEmail.setVisibility(GONE);
+                layoutContact.setVisibility(GONE);
+                layoutFname.setVisibility(GONE);
+                layoutLname.setVisibility(GONE);
+
+
+                email = prefMember.getString("email", "");
+                Log.d("REGISTERED EMAIL", email);
+
+            }
 
             if (!date.isEmpty() && !time.isEmpty()) {
                 // Create the MySQL datetime string
@@ -125,12 +166,12 @@ public class ServiceBookingActivity4 extends AppCompatActivity {
                         btnCreateOnClick(v);
 
 
-                        prefedit = getApplicationContext().getSharedPreferences("mybooking",MODE_PRIVATE).edit();
+                        prefedit = getApplicationContext().getSharedPreferences("mybooking", MODE_PRIVATE).edit();
                         prefedit.clear();
                         prefedit.commit();
 
-                        prefEdit2.putString("email",email);
-                        prefEdit2.commit();
+                        Intent intent = new Intent(ServiceBookingActivity4.this,FinishBookingActivity.class);
+                        startActivity(intent);
 
                     }
                 });
@@ -148,9 +189,6 @@ public class ServiceBookingActivity4 extends AppCompatActivity {
                 myDialog.setTitle("Confirm");
 
                 myDialog.show();
-
-
-
 
 
             }
@@ -175,8 +213,11 @@ public class ServiceBookingActivity4 extends AppCompatActivity {
         params.add("email", email);
         params.add("booking_date_time", dateString);
         params.add("booking_service_name", servicename);
+        params.add("uniquekey", key);
+        params.add("repeated", type);
+        params.add("request",request);
 
-        client.post("http://10.0.2.2/FYPCleanerAdmin/addMember.php", params, new JsonHttpResponseHandler() {
+        client.post("http://10.0.2.2/FYPCleanerAdmin/addBookingAndroid.php", params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
 
@@ -185,7 +226,7 @@ public class ServiceBookingActivity4 extends AppCompatActivity {
 
 
                     Toast.makeText(getApplicationContext(), response.getString("message"), Toast.LENGTH_SHORT).show();
-                    finish();
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

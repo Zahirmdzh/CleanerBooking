@@ -35,13 +35,13 @@
         android:textAlignment="center" />
 
     <TextView
-        android:id="@+id/textView40"
+        android:id="@+id/textViewType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="30dp"
         android:gravity="center_horizontal"
-        android:text="Type"
+        android:text="Repeated?"
         android:textSize="20sp" />
 
 
@@ -57,7 +57,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Normal" />
+            android:text="No" />
 
         <RadioButton
             android:id="@+id/radioButton2"

@@ -59,10 +59,10 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
+                    android:background="@drawable/textviewtime"
+                    android:drawableRight="@drawable/ic_date_range_black_24dp"
                     android:gravity="right"
-                    android:text="TextView"
-                    android:textSize="25sp"
-                    android:background="@drawable/edit_textbox"/>
+                    android:textSize="25sp" />
 
             </LinearLayout>
 
@@ -86,10 +86,10 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
+                    android:background="@drawable/textviewtime"
+                    android:drawableRight="@drawable/ic_access_time_black_24dp"
                     android:gravity="right"
-                    android:text="TextView"
-                    android:textSize="25sp"
-                    android:background="@drawable/edit_textbox"/>
+                    android:textSize="25sp" />
 
             </LinearLayout>
 

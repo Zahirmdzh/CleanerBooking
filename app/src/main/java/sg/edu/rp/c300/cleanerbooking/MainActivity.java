@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,6 +23,9 @@ import com.loopj.android.http.RequestParams;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.util.Random;
+
 import cz.msebera.android.httpclient.Header;
 
 
@@ -32,10 +36,12 @@ public class MainActivity extends AppCompatActivity {
     EditText etEmail, etPass;
     private Session session;
     private AsyncHttpClient client;
-    SharedPreferences myPref;
-    SharedPreferences.Editor prefEdit;
     private String member_id;
 
+//    private static final String ALLOWED_CHARACTERS ="0123456789qwertyuiopasdfghjklzxcvbnm";
+
+
+    private static final String UKEY = "APP";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +56,7 @@ public class MainActivity extends AppCompatActivity {
         etPass = findViewById(R.id.editTextPassword);
         session = new Session(this);
         client = new AsyncHttpClient();
-        myPref = getSharedPreferences("myPref", Context.MODE_PRIVATE);
-        prefEdit = myPref.edit();
+
 
 
         if(session.loggedinStatus()){
@@ -61,6 +66,19 @@ public class MainActivity extends AppCompatActivity {
         tvguest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                SharedPreferences sharedPrefs = getSharedPreferences(
+                        UKEY, Context.MODE_PRIVATE);
+
+                String androidId = Settings.Secure.getString(getContentResolver(),
+                        Settings.Secure.ANDROID_ID);
+                Log.d("UKEY", androidId);
+
+                SharedPreferences.Editor editor = sharedPrefs.edit();
+                editor.putString("uniquekey", androidId);
+                editor.commit();
+
+
                 Intent i = new Intent(MainActivity.this,HomeActivity.class);
                 startActivity(i);
             }
@@ -104,19 +122,24 @@ public class MainActivity extends AppCompatActivity {
                                 if (authenticated == true) {
 
                                     Intent intent = new Intent(MainActivity.this,HomeActivity.class);
-                                    //member_id = response.getString("member_id");
-                                    //Log.d("member_id",member_id);
-
+                                    member_id = response.getString("member_id");
+                                    Log.d("member_id",member_id);
+                                    String email = response.getString("email");
                                     //intent.putExtra("email",email);
                                     //intent.putExtra("password",pass);
 
 
+                                    SharedPreferences pref = getSharedPreferences("pref2",MODE_PRIVATE);
+                                    SharedPreferences.Editor prefEdit = pref.edit();
                                     prefEdit.putString("member_id",member_id);
+                                    prefEdit.putString("email",email);
                                     prefEdit.commit();
 
-                                    startActivity(intent);
+
                                     Toast.makeText(MainActivity.this, "Login Successfull", Toast.LENGTH_LONG).show();
 
+                                    session.setLoggedIn(true);
+                                    startActivity(intent);
 
                                 } else {
                                     Toast.makeText(MainActivity.this, "Login failed. Please check your login credentials", Toast.LENGTH_LONG);
@@ -140,7 +163,14 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
     }
+    @Override
+    public void onBackPressed() {
+        this.finishAffinity();
+        super.onBackPressed();
+    }
+
 }
 
 

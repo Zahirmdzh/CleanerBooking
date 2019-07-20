@@ -14,11 +14,6 @@ public class Session {
         editor = prefs.edit();
     }
 
-    public void saveEmail(String email) {
-        editor.putString("email",email);
-        editor.commit();
-
-    }
 
     public void setLoggedIn(boolean isLoggedIn){
 
