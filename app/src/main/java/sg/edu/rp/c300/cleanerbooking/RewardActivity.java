@@ -27,10 +27,10 @@ public class RewardActivity extends AppCompatActivity {
         titlebar.setTitle("Reward");
 
 
-        tv=findViewById(R.id.textViewRedeem);
+        //tv=findViewById(R.id.textViewRedeem);
         Intent i = getIntent();
         Reward reward = (Reward)i.getSerializableExtra("reward");
-        tv.setText(reward.getName() + "\n" + reward.getDesc());
+        //tv.setText(reward.getName() + "\n" + reward.getDesc());
 
 
     }

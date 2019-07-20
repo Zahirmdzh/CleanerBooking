@@ -23,7 +23,7 @@
         android:id="@+id/textViewRedeem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Choose from the range of offers for redemption below."
+        android:text="Choose from a range of offers for redemption below."
         android:gravity="center"/>
 
 
