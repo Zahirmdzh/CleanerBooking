@@ -101,7 +101,7 @@ public class HomeActivity extends AppCompatActivity {
                         String member_id = pref.getString("member_id", "");
                         Log.d("member_id", member_id);
 //                        String email = pref.getString("email","");
-//
+
 
                         RequestParams params = new RequestParams();
 
