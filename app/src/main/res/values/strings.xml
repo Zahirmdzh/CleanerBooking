@@ -20,7 +20,7 @@
     <string name="tab_text_2">Tab 2</string>
     <string name="hintConfirm">Confirm</string>
     <string name="btnBook">Book Now</string>
-    <string name="contactHint">Contact Us with your enquiries...</string>
+    <string name="contactHint">Need Help? Contact Us with your enquiries...</string>
 
 
     <string-array name="weekItem">

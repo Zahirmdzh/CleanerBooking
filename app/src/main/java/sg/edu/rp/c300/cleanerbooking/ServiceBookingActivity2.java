@@ -8,6 +8,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -20,6 +22,7 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,14 +35,14 @@ import static android.view.View.VISIBLE;
 public class ServiceBookingActivity2 extends AppCompatActivity {
 
     EditText etReq;
-    TextView tvTime,tvDate, tvType;
-    int theHour, theMin, theYear,theMonth,theDay;
+    TextView tvTime, tvDate, tvType, tvErrorTime, tvErrorDate;
+    int theHour, theMin, theYear, theMonth, theDay;
     Button btnNext;
     SharedPreferences pref;
     SharedPreferences.Editor prefedit;
     Spinner spn;
     RadioGroup rg;
-    RadioButton rb1,rb2,rb3;
+    RadioButton rb1, rb2, rb3;
     ArrayList<String> aLItems;
     ArrayAdapter<String> aaItems;
     private Session session;
@@ -58,7 +61,7 @@ public class ServiceBookingActivity2 extends AppCompatActivity {
 
 
         //create mybooking.xml file
-        pref = getSharedPreferences("mybooking",MODE_PRIVATE);
+        pref = getSharedPreferences("mybooking", MODE_PRIVATE);
         prefedit = pref.edit();
 
         btnNext = findViewById(R.id.buttonConfirm);
@@ -71,20 +74,20 @@ public class ServiceBookingActivity2 extends AppCompatActivity {
         etReq = findViewById(R.id.editTextRequests);
 
         session = new Session(this);
-        if(session.loggedinStatus() == false) {
+        if (session.loggedinStatus() == false) {
             rg.setVisibility(GONE);
             tvType.setVisibility(GONE);
         }
 
         aLItems = new ArrayList<>();
         // create an array adapter using default spinner layout
-        aaItems = new ArrayAdapter<>(this,android.R.layout.simple_spinner_dropdown_item,aLItems);
+        aaItems = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, aLItems);
 
         spn.setAdapter(aaItems);
 
         spn.setVisibility(GONE);
-        Log.d("RB1ONCREATE",rb1.getText().toString());
-        prefedit.putString("type",rb1.getText().toString());
+        Log.d("RB1ONCREATE", rb1.getText().toString());
+        prefedit.putString("type", rb1.getText().toString());
         prefedit.commit();
 
         rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -92,10 +95,10 @@ public class ServiceBookingActivity2 extends AppCompatActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 aLItems.clear();
 
-                if (rg.getCheckedRadioButtonId() == rb1.getId())  {
+                if (rg.getCheckedRadioButtonId() == rb1.getId()) {
                     spn.setVisibility(GONE);
-                    Log.d("RB1TEXT",rb1.getText().toString());
-                    prefedit.putString("type",rb1.getText().toString());
+                    Log.d("RB1TEXT", rb1.getText().toString());
+                    prefedit.putString("type", rb1.getText().toString());
                     prefedit.commit();
 
                 } else {
@@ -116,7 +119,7 @@ public class ServiceBookingActivity2 extends AppCompatActivity {
                     } else {
                         return;
                     }
-                 }
+                }
                 aaItems.notifyDataSetChanged();
 
 
@@ -130,8 +133,8 @@ public class ServiceBookingActivity2 extends AppCompatActivity {
                                        int position, long id) {
 
                 String item = String.valueOf(spn.getItemAtPosition(position));
-                Log.d("ITEM",item);
-                prefedit.putString("type",item);
+                Log.d("ITEM", item);
+                prefedit.putString("type", item);
                 prefedit.commit();
 
             }
@@ -144,7 +147,6 @@ public class ServiceBookingActivity2 extends AppCompatActivity {
         });
 
 
-
         tvTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -152,7 +154,7 @@ public class ServiceBookingActivity2 extends AppCompatActivity {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         String time = hourOfDay + ":" + minute;
-                        prefedit.putString("mytime",time);
+                        prefedit.putString("mytime", time);
                         prefedit.commit();
 
                         tvTime.setText(time);
@@ -163,7 +165,7 @@ public class ServiceBookingActivity2 extends AppCompatActivity {
                 };
 
                 TimePickerDialog myTimeDialog = new TimePickerDialog(ServiceBookingActivity2.this,
-                        myTimeListener,theHour,theMin,true);
+                        myTimeListener, theHour, theMin, true);
                 myTimeDialog.show();
             }
         });
@@ -171,9 +173,8 @@ public class ServiceBookingActivity2 extends AppCompatActivity {
 
         final Calendar c = Calendar.getInstance();
         theYear = c.get(Calendar.YEAR);
-        theMonth= c.get(Calendar.MONTH);
+        theMonth = c.get(Calendar.MONTH);
         theDay = c.get(Calendar.DAY_OF_MONTH);
-
 
 
         tvDate = findViewById(R.id.textViewDate);
@@ -184,11 +185,11 @@ public class ServiceBookingActivity2 extends AppCompatActivity {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 
-                        String monthformat = String.format("%02d" , monthOfYear + 1);
-                        String dayformat = String.format("%02d" , dayOfMonth);
+                        String monthformat = String.format("%02d", monthOfYear + 1);
+                        String dayformat = String.format("%02d", dayOfMonth);
                         String date = year + "-" + monthformat + "-" + dayformat;
 
-                        prefedit.putString("mydate",date);
+                        prefedit.putString("mydate", date);
                         prefedit.commit();
 
                         tvDate.setText(date);
@@ -200,21 +201,107 @@ public class ServiceBookingActivity2 extends AppCompatActivity {
                 };
 
                 DatePickerDialog myDateDialog = new DatePickerDialog(ServiceBookingActivity2.this,
-                        myDateListener,theYear,theMonth,theDay);
+                        myDateListener, theYear, theMonth, theDay);
 
                 myDateDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
                 myDateDialog.show();
             }
         });
 
+     // Error Checking
+        tvErrorDate = findViewById(R.id.textViewErrorDate);
+        tvErrorTime = findViewById(R.id.textViewErrorTime);
+
+        tvTime.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+
+                if (!tvTime.getText().toString().isEmpty() && s.length() > 0)
+                {
+
+                    tvErrorTime.setText("");
+                    tvTime.setError(null);
+                }
+                else
+                {
+
+                    tvErrorTime.setText("Date required. Please select the date");
+                    tvTime.setError("Required");
+                }
+            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // other stuffs
+            }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // other stuffs
+            }
+        });
+
+
+        tvDate.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+
+                if (!tvDate.getText().toString().isEmpty() && s.length() > 0)
+                {
+
+                    tvErrorDate.setText("");
+                    tvDate.setError(null);
+                }
+                else
+                {
+
+                    tvErrorDate.setText("Date required. Please select the date");
+                    tvDate.setError("Required");
+                }
+            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // other stuffs
+            }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // other stuffs
+            }
+        });
+
+
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String request = etReq.getText().toString();
-                prefedit.putString("request",request);
-                prefedit.commit();
-                startActivity(new Intent(ServiceBookingActivity2.this, ServiceBookingActivity3.class));
+
+
+                if (pref.getString("mytime", "").isEmpty()) {
+                    tvTime.setError("Select Time");
+                    tvErrorTime.setText("Time required. Please select the time");
+
+                } else if (pref.getString("mydate", "").isEmpty()) {
+                    tvDate.setError("Select Date");
+                    tvErrorDate.setText("Date required. Please select the date");
+
+
+                } else {
+
+                    String request = etReq.getText().toString();
+                    prefedit.putString("request", request);
+                    prefedit.commit();
+
+                    startActivity(new Intent(ServiceBookingActivity2.this, ServiceBookingActivity3.class));
+                }
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        prefedit.clear();
+        prefedit.commit();
+        super.onBackPressed();
+    }
+
+    @Override
+    protected void onRestart() {
+        prefedit.clear();
+        prefedit.commit();
+        tvTime.setText("");
+        tvDate.setText("");
+
+        super.onRestart();
     }
 }

@@ -1,17 +1,22 @@
 package sg.edu.rp.c300.cleanerbooking;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.Image;
 import android.net.Uri;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -29,10 +34,14 @@ import cz.msebera.android.httpclient.Header;
 
 public class ContactActivity extends AppCompatActivity {
 
-    ImageView ivPhone,ivMail;
     EditText etEmail, etEnquiry;
-    Button btnSend;
+    Button btnSend, btnEmail, btnPhone;
+    LinearLayout layoutE;
+    private String email;
+
     private AsyncHttpClient client;
+    private Session session;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,28 +49,38 @@ public class ContactActivity extends AppCompatActivity {
         setContentView(R.layout.activity_contact);
 
         client = new AsyncHttpClient();
+        layoutE = findViewById(R.id.layoutEmail);
+        session = new Session(this);
 
         Toolbar myTB = findViewById(R.id.my_toolbar);
         setSupportActionBar(myTB);
         ActionBar AB = getSupportActionBar();
         AB.setDisplayHomeAsUpEnabled(true);
 
-        ivPhone = findViewById(R.id.ivPhone);
-        ivMail = findViewById(R.id.ivEmail);
+
+        btnPhone = findViewById(R.id.buttonPhone);
+        btnEmail = findViewById(R.id.buttonEmail);
         etEmail = findViewById(R.id.editTextEmail);
         etEnquiry = findViewById(R.id.editTextEnquiry);
         btnSend = findViewById(R.id.buttonSend);
 
-        ivPhone.setOnClickListener(new View.OnClickListener() {
+        if (session.loggedinStatus() == true) {
+
+            SharedPreferences pref = getSharedPreferences("pref2", MODE_PRIVATE);
+            email = pref.getString("email", etEmail.getText().toString().trim());
+            etEmail.setText(email);
+        }
+
+        btnPhone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(Intent. ACTION_DIAL, Uri.parse("tel:" +96982298));
+                Intent i = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + 96982298));
                 startActivity(i);
 
             }
         });
 
-        ivMail.setOnClickListener(new View.OnClickListener() {
+        btnEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //ACTION_SEND is used to indicate sending text
@@ -76,7 +95,7 @@ public class ContactActivity extends AppCompatActivity {
                 // This MIME type indicates email
                 email.setType("message/rfc822");
 
-                startActivity(Intent.createChooser(email,"Choose an Email client: "));
+                startActivity(Intent.createChooser(email, "Choose an Email client: "));
             }
         });
 
@@ -84,39 +103,79 @@ public class ContactActivity extends AppCompatActivity {
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-           btnSendOnClick(v);
+                btnSendOnClick(v);
 
 
             }
         });
+
+
+
+     /*   final String email = etEmail.getEditableText().toString().trim();
+        final String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+
+        etEmail.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+
+                if (email.matches(emailPattern) && s.length() > 0) {
+                    Toast.makeText(getApplicationContext(), "valid email address", Toast.LENGTH_SHORT).show();
+                    // or
+                    etEmail.setError("valid email");
+                } else {
+                    Toast.makeText(getApplicationContext(), "Invalid email address", Toast.LENGTH_SHORT).show();
+                    //or
+                    etEmail.setError("invalid email");
+                }
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // other stuffs
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // other stuffs
+            }
+        });*/
 
     }
 
     private void btnSendOnClick(View v) {
         String url = "http://10.0.2.2/FYPCleanerAdmin/addEnquiry.php";
-        String email = etEmail.getText().toString();
-        String enquiry = etEnquiry.getText().toString();
+        email = etEmail.getText().toString().trim();
+        if (isValidEmail(email)) {
+            String enquiry = etEnquiry.getText().toString();
 
-        RequestParams params = new RequestParams();
-        params.add("email", email);
-        params.add("enquiry", enquiry);
-
-
-        client.post(url, params, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-
-                try {
-                    Log.i("JSON Results: ", response.toString());
+            RequestParams params = new RequestParams();
+            params.add("email", email);
+            params.add("enquiry", enquiry);
 
 
-                    Toast.makeText(getApplicationContext(), response.getString("message"), Toast.LENGTH_SHORT).show();
-                    Toast.makeText(getApplicationContext(), "Enquiry received", Toast.LENGTH_SHORT).show();
-                } catch (JSONException e) {
-                    e.printStackTrace();
+            client.post(url, params, new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+
+                    try {
+                        Log.i("JSON Results: ", response.toString());
+
+
+                        Toast.makeText(getApplicationContext(), response.getString("message"), Toast.LENGTH_SHORT).show();
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
                 }
+            });
+        } else {
+            etEmail.setError("Invalid Email");
+        }
+    }
 
-            }
-        });
+    public final static boolean isValidEmail(CharSequence target) {
+        if (target == null) {
+            return false;
+        } else {
+            return android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
+        }
     }
 }

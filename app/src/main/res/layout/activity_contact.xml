@@ -1,156 +1,176 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/contraintLayout"
+    android:id="@+id/LinearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="ContactActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/my_toolbar"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
 
-    <TextView
-        android:id="@+id/textViewLabelPhone"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Company Contact No:"
-        android:textSize="24sp"
-        android:textStyle="bold"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:layout_margin="10dp">
 
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/my_toolbar" />
+        <TextView
+            android:id="@+id/textViewLabelPhone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Company Contact No:"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/textViewPhone"
-        android:layout_width="0dp"
+        <TextView
+            android:id="@+id/textViewPhone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="96982298"
+            android:textAllCaps="false"
+            android:textSize="18sp"
+            android:textStyle="italic" />
+
+        <Button
+            android:id="@+id/buttonPhone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_contact"
+            android:drawableLeft="@drawable/ic_call_black_24dp"
+            android:layout_marginTop="5dp"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="96982298"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
 
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewLabelPhone" />
+        <TextView
+            android:id="@+id/textViewLabelEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/etemailhint"
+            android:textSize="24sp"
 
-    <ImageView
-        android:id="@+id/ivPhone"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        app:layout_constraintBottom_toTopOf="@id/textViewLabelEmail"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textViewLabelPhone"
-        app:srcCompat="@drawable/ic_call_black_24dp" />
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/textViewLabelEmail"
-        android:layout_width="0dp"
+        <TextView
+            android:id="@+id/textViewEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="greentacpteltd@gmail.com"
+            android:textSize="18sp"
+            android:textStyle="italic" />
+
+        <Button
+            android:id="@+id/buttonEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_contact"
+            android:drawableLeft="@drawable/ic_email_black_24dp"
+            android:layout_marginTop="5dp"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="@string/etemailhint"
-        android:textSize="24sp"
-        android:textStyle="bold"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
 
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewPhone" />
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Registration No: "
+            android:textSize="24sp"
 
-    <TextView
-        android:id="@+id/textViewEmail"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="greentacpteltd@gmail.com"
+            android:textStyle="bold" />
 
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewLabelEmail" />
+        <TextView
+            android:id="@+id/textViewRegistrationNo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="201708591W"
 
-    <ImageView
-        android:id="@+id/ivEmail"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textViewLabelEmail"
-        app:srcCompat="@drawable/ic_email_black_24dp" />
-
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Registration No: "
-        android:textSize="24sp"
-        android:textStyle="bold"
-
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewEmail" />
-
-    <TextView
-        android:id="@+id/textViewRegistrationNo"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="201708591W"
-
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+            android:textSize="18sp"
+            android:textStyle="italic" />
+    </LinearLayout>
 
 
-    <TextView
-        android:id="@+id/textView7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Email:"
-        android:layout_marginBottom="15dp"
-        app:layout_constraintEnd_toStartOf="@+id/editTextEmail"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/editTextEnquiry" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center|bottom"
+        android:orientation="vertical"
+        android:layout_margin="10dp">
 
-    <EditText
-        android:id="@+id/editTextEmail"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Enter Email Address"
-        android:inputType="textPersonName"
-        app:layout_constraintBaseline_toBaselineOf="@+id/textView7"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView7" />
+        <LinearLayout
+            android:id="@+id/layoutEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_weight="0.3"
+                android:gravity="center"
+                android:text="Email:"
+                android:textSize="24sp" />
+
+            <EditText
+                android:id="@+id/editTextEmail"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.7"
+                android:ems="10"
+                android:hint="Enter Email Address"
+                android:inputType="textPersonName" />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/editTextEnquiry"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/inputbox"
+            android:ems="10"
+            android:gravity="start|top"
+            android:hint="@string/contactHint"
+            android:inputType="textMultiLine"
+            android:padding="5dp"
+            android:maxLength="120"/>
+
+        <Button
+            android:id="@+id/buttonSend"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="#BE803B"
+            android:text="Send"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
 
 
-    <EditText
-        android:id="@+id/editTextEnquiry"
-        android:layout_width="0dp"
-        android:layout_height="200dp"
-        android:layout_margin="5dp"
-        android:padding="5dp"
-        android:ems="10"
-        android:gravity="start|top"
-        android:hint="@string/contactHint"
-        android:inputType="textMultiLine"
-        android:background="@drawable/inputbox"
-        app:layout_constraintBottom_toTopOf="@+id/buttonSend"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
-
-
-    <Button
-        android:id="@+id/buttonSend"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Send"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>
