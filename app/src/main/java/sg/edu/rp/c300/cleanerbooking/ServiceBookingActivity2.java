@@ -224,7 +224,7 @@ public class ServiceBookingActivity2 extends AppCompatActivity {
                 else
                 {
 
-                    tvErrorTime.setText("Date required. Please select the date");
+                    tvErrorTime.setText("Time required. Please select the date");
                     tvTime.setError("Required");
                 }
             }
@@ -303,5 +303,13 @@ public class ServiceBookingActivity2 extends AppCompatActivity {
         tvDate.setText("");
 
         super.onRestart();
+    }
+
+    @Override
+    protected void onStop() {
+        prefedit.clear();
+        prefedit.commit();
+
+        super.onStop();
     }
 }

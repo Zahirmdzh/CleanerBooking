@@ -100,11 +100,11 @@ public class ContactActivity extends AppCompatActivity {
         });
 
 
+
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 btnSendOnClick(v);
-
 
             }
         });
@@ -167,7 +167,7 @@ public class ContactActivity extends AppCompatActivity {
                 }
             });
         } else {
-            etEmail.setError("Invalid Email");
+            etEmail.setError("Invalid Email. Needs to have @ and end with .com");
         }
     }
 

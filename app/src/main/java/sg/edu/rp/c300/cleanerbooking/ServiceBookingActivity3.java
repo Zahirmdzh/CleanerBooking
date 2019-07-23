@@ -7,6 +7,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,7 +19,8 @@ import static android.view.View.GONE;
 public class ServiceBookingActivity3 extends AppCompatActivity {
 
     Button btnNext;
-    EditText etFname, etLname,etEmail,etPhone,etAddress;
+    EditText etFname, etLname, etEmail, etPhone, etAddress;
+    TextView tvErrorFname, tvErrorLname, tvErrorEmail, tvErrorPhone, tvErrorAddress;
     SharedPreferences pref;
     SharedPreferences.Editor prefedit;
 
@@ -31,6 +34,12 @@ public class ServiceBookingActivity3 extends AppCompatActivity {
         setSupportActionBar(myTB);
         ActionBar AB = getSupportActionBar();
         AB.setDisplayHomeAsUpEnabled(true);
+        //Error Fields
+        tvErrorFname = findViewById(R.id.textViewErrorFirst);
+        tvErrorLname = findViewById(R.id.textViewErrorLast);
+        tvErrorEmail = findViewById(R.id.textViewErrorEmail);
+        tvErrorPhone = findViewById(R.id.textViewErrorPhone);
+        tvErrorAddress = findViewById(R.id.textViewErrorAddress);
 
         etFname = findViewById(R.id.editTextFirst);
         etLname = findViewById(R.id.editTextLast);
@@ -47,9 +56,12 @@ public class ServiceBookingActivity3 extends AppCompatActivity {
         }
 
 
-
-        pref = getSharedPreferences("mybooking",MODE_PRIVATE);
+        pref = getSharedPreferences("mybooking", MODE_PRIVATE);
         prefedit = pref.edit();
+
+
+        checkET();
+
 
         btnNext = findViewById(R.id.buttonConfirm);
 
@@ -63,16 +75,170 @@ public class ServiceBookingActivity3 extends AppCompatActivity {
                 String phone = etPhone.getText().toString().trim();
                 String address = etAddress.getText().toString().trim();
 
-                prefedit.putString("fname",fname);
-                prefedit.putString("lname",lname);
-                prefedit.putString("email",email);
-                prefedit.putString("contact",phone);
-                prefedit.putString("address",address);
+                if (fname.isEmpty()) {
+                    etFname.setError("Required");
+                    tvErrorFname.setText("First Name required. Please enter your first name");
 
-                prefedit.commit();
+                } else if (lname.isEmpty()) {
+                    etLname.setError("Required");
+                    tvErrorLname.setText("Last Name required. Please enter your last name");
 
-                startActivity(new Intent(ServiceBookingActivity3.this, ServiceBookingActivity4.class));
+
+                } else if (email.isEmpty() && !isValidEmail(email)) {
+                    etEmail.setError("Required");
+                    tvErrorEmail.setText("Email required. Please enter your email address");
+
+
+                } else if (phone.isEmpty() && phone.length() != 8) {
+                    etPhone.setError("Required");
+                    tvErrorPhone.setText("Phone required. Please enter your phone number");
+
+
+                } else if (address.isEmpty() && address.length() < 120) {
+                    etAddress.setError("Required");
+                    tvErrorAddress.setText("Address required. Please enter your Address");
+
+                } else {
+
+
+                    prefedit.putString("fname", fname);
+                    prefedit.putString("lname", lname);
+                    prefedit.putString("email", email);
+                    prefedit.putString("contact", phone);
+                    prefedit.putString("address", address);
+
+                    prefedit.commit();
+
+                    startActivity(new Intent(ServiceBookingActivity3.this, ServiceBookingActivity4.class));
+                }
             }
         });
+    }
+
+    private void checkET() {
+
+        etFname.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+
+                if (!etFname.getText().toString().isEmpty() && s.length() > 0)
+                {
+                    tvErrorFname.setText("");
+                    etFname.setError(null);
+                }
+                else
+                {
+                    tvErrorFname.setText("First Name required. Please enter your first name");
+                    etFname.setError("Required");
+                }
+            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // other stuffs
+            }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // other stuffs
+            }
+        });
+
+
+        etLname.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+
+                if (!etLname.getText().toString().isEmpty() && s.length() > 0)
+                {
+                    tvErrorLname.setText("");
+                    etLname.setError(null);
+                }
+                else
+                {
+                    tvErrorLname.setText("Last name required. Please enter your last name");
+                    etLname.setError("Required");
+                }
+            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // other stuffs
+            }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // other stuffs
+            }
+        });
+
+        etEmail.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+
+                if (!etEmail.getText().toString().isEmpty() && isValidEmail(etEmail.getText().toString()) && s.length() > 0)
+                {
+                    tvErrorEmail.setText("");
+                    etEmail.setError(null);
+                }
+                else
+                {
+                    tvErrorEmail.setText("Email needs to have @ and end with .com");
+                    etEmail.setError("Invalid");
+                }
+            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // other stuffs
+            }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // other stuffs
+            }
+        });
+
+
+        etPhone.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+
+                if (!etPhone.getText().toString().isEmpty() && etPhone.length() ==8 && s.length() > 0)
+                {
+                    tvErrorPhone.setText("");
+                    etPhone.setError(null);
+                }
+                else
+                {
+                    tvErrorPhone.setText("Phone number must have 8 digits");
+                    etPhone.setError("Invalid");
+                }
+            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // other stuffs
+            }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // other stuffs
+            }
+        });
+
+        etAddress.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+
+                if (!etAddress.getText().toString().isEmpty() && etAddress.length() < 120 && s.length() > 0)
+                {
+                    tvErrorAddress.setText("");
+                    etAddress.setError(null);
+                }
+                else
+                {
+                    tvErrorAddress.setText("Max 120 characters");
+                    etAddress.setError("Chars Exceeded");
+                }
+            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // other stuffs
+            }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // other stuffs
+            }
+        });
+
+
+
+
+    }
+
+    public final static boolean isValidEmail(CharSequence target) {
+        if (target == null) {
+            return false;
+        } else {
+            return android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
+        }
     }
 }
