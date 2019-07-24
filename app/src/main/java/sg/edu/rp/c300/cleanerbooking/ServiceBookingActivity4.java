@@ -1,9 +1,17 @@
 package sg.edu.rp.c300.cleanerbooking;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.RingtoneManager;
+import android.net.Uri;
+import android.os.Build;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -43,6 +51,8 @@ public class ServiceBookingActivity4 extends AppCompatActivity {
     Date d;
     private Session session;
     LinearLayout layoutContact,layoutFname,layoutLname,layoutEmail;
+    int requestCode = 123;
+    int notificationID = 888;
 
 
     @Override
@@ -92,6 +102,8 @@ public class ServiceBookingActivity4 extends AppCompatActivity {
 
             time = pref.getString("mytime", "");
             date = pref.getString("mydate", "");
+            Log.d("TIME",time);
+            Log.d("DATE",date);
 
             address = pref.getString("address", "");
             contact = pref.getString("contact", "");
@@ -233,6 +245,44 @@ public class ServiceBookingActivity4 extends AppCompatActivity {
 
             }
         });
+
+        NotificationManager notificationManager =
+                (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+
+
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O) {
+            NotificationChannel channel = new
+                    NotificationChannel("default", "Default Channel",
+                    NotificationManager.IMPORTANCE_HIGH);
+
+            channel.setDescription("This is for default notification");
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        Intent intent = new Intent(ServiceBookingActivity4.this,ServiceBookingActivity4.class);
+
+        PendingIntent pIntent = PendingIntent.getActivity(
+                ServiceBookingActivity4.this,requestCode,intent,
+                PendingIntent.FLAG_CANCEL_CURRENT);
+
+
+        NotificationCompat.Builder builder = new
+                NotificationCompat.Builder(ServiceBookingActivity4.this,"default");
+        builder.setContentTitle("Booking has been made!");
+        builder.setContentText("Details of the assigned cleaner will be sent to your Email Address");
+        builder.setSmallIcon(android.R.drawable.btn_star_big_off);
+        builder.setContentIntent(pIntent);
+        builder.setAutoCancel(true);
+
+        Uri uri = RingtoneManager.getDefaultUri(
+                RingtoneManager.TYPE_NOTIFICATION);
+        builder.setSound(uri);
+        builder.setPriority(Notification.PRIORITY_HIGH);
+
+
+        Notification n  = builder.build();
+
+        notificationManager.notify(notificationID, n);
     }
 
 

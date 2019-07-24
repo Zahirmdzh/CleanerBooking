@@ -23,12 +23,15 @@ public class ServiceBookingActivity3 extends AppCompatActivity {
     TextView tvErrorFname, tvErrorLname, tvErrorEmail, tvErrorPhone, tvErrorAddress;
     SharedPreferences pref;
     SharedPreferences.Editor prefedit;
+    private Session session;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_service_booking3);
+
+
 
         Toolbar myTB = findViewById(R.id.my_toolbar);
         setSupportActionBar(myTB);
@@ -47,12 +50,13 @@ public class ServiceBookingActivity3 extends AppCompatActivity {
         etPhone = findViewById(R.id.editTextPhone);
         etAddress = findViewById(R.id.editTextAddress);
 
-        Session session = new Session(this);
+        session = new Session(this);
         if (session.loggedinStatus() == true) {
             etFname.setVisibility(GONE);
             etLname.setVisibility(GONE);
             etEmail.setVisibility(GONE);
             etPhone.setVisibility(GONE);
+
         }
 
 
@@ -75,21 +79,22 @@ public class ServiceBookingActivity3 extends AppCompatActivity {
                 String phone = etPhone.getText().toString().trim();
                 String address = etAddress.getText().toString().trim();
 
-                if (fname.isEmpty()) {
+
+                if (fname.isEmpty() && session.loggedinStatus() == false) {
                     etFname.setError("Required");
                     tvErrorFname.setText("First Name required. Please enter your first name");
 
-                } else if (lname.isEmpty()) {
+                } else if (lname.isEmpty() && session.loggedinStatus() == false) {
                     etLname.setError("Required");
                     tvErrorLname.setText("Last Name required. Please enter your last name");
 
 
-                } else if (email.isEmpty() && !isValidEmail(email)) {
+                } else if (email.isEmpty() && !isValidEmail(email) && session.loggedinStatus() == false) {
                     etEmail.setError("Required");
                     tvErrorEmail.setText("Email required. Please enter your email address");
 
 
-                } else if (phone.isEmpty() && phone.length() != 8) {
+                } else if (phone.isEmpty() && phone.length() != 8 && session.loggedinStatus() == false  ) {
                     etPhone.setError("Required");
                     tvErrorPhone.setText("Phone required. Please enter your phone number");
 
@@ -188,7 +193,7 @@ public class ServiceBookingActivity3 extends AppCompatActivity {
         etPhone.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
 
-                if (!etPhone.getText().toString().isEmpty() && etPhone.length() ==8 && s.length() > 0)
+                if (!etPhone.getText().toString().isEmpty() && etPhone.length() ==8 && s.length() > 0 && (etPhone.getText().toString().startsWith("9") || etPhone.getText().toString().startsWith("9")))
                 {
                     tvErrorPhone.setText("");
                     etPhone.setError(null);
@@ -240,5 +245,40 @@ public class ServiceBookingActivity3 extends AppCompatActivity {
         } else {
             return android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        prefedit.clear();
+        prefedit.commit();
+        super.onBackPressed();
+    }
+/*
+    @Override
+    protected void onRestart() {
+        prefedit.clear();
+        prefedit.commit();
+        etFname.setText("");
+        etLname.setText("");
+        etEmail.setText("");
+        etPhone.setText("");
+        etAddress.setText("");
+        super.onRestart();
+    }
+
+    @Override
+    protected void onStop() {
+        prefedit.clear();
+        prefedit.commit();
+
+        super.onStop();
+    }
+*/
+
+    @Override
+    protected void onDestroy() {
+        prefedit.clear();
+        prefedit.commit();
+        super.onDestroy();
     }
 }

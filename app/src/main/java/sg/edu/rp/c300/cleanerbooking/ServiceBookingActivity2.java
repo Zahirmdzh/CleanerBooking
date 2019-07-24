@@ -64,7 +64,7 @@ public class ServiceBookingActivity2 extends AppCompatActivity {
         pref = getSharedPreferences("mybooking", MODE_PRIVATE);
         prefedit = pref.edit();
 
-        btnNext = findViewById(R.id.buttonConfirm);
+        btnNext = findViewById(R.id.buttonNext);
         tvTime = findViewById(R.id.textViewStartTime);
         spn = findViewById(R.id.spinnerDate);
         rg = findViewById(R.id.rg);
@@ -266,23 +266,26 @@ public class ServiceBookingActivity2 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
-                if (pref.getString("mytime", "").isEmpty()) {
-                    tvTime.setError("Select Time");
-                    tvErrorTime.setText("Time required. Please select the time");
-
-                } else if (pref.getString("mydate", "").isEmpty()) {
-                    tvDate.setError("Select Date");
-                    tvErrorDate.setText("Date required. Please select the date");
-
-
-                } else {
-
+                if (pref.contains("mytime") && pref.contains("mydate")) {
                     String request = etReq.getText().toString();
+
                     prefedit.putString("request", request);
+
                     prefedit.commit();
 
                     startActivity(new Intent(ServiceBookingActivity2.this, ServiceBookingActivity3.class));
+                }
+
+                else if (!pref.contains("mytime")) {
+
+                    tvTime.setError("Select Time");
+                    tvErrorTime.setText("Time required. Please select the time");
+
+                } else if (!pref.contains("mydate")) {
+
+                    tvDate.setError("Select Date");
+                    tvErrorDate.setText("Date required. Please select the date");
+
                 }
             }
         });
@@ -295,13 +298,12 @@ public class ServiceBookingActivity2 extends AppCompatActivity {
         super.onBackPressed();
     }
 
-    @Override
+/*    @Override
     protected void onRestart() {
         prefedit.clear();
         prefedit.commit();
         tvTime.setText("");
         tvDate.setText("");
-
         super.onRestart();
     }
 
@@ -309,7 +311,16 @@ public class ServiceBookingActivity2 extends AppCompatActivity {
     protected void onStop() {
         prefedit.clear();
         prefedit.commit();
-
+        tvTime.setText("");
+        tvDate.setText("");
         super.onStop();
+    }*/
+
+    @Override
+    protected void onDestroy() {
+
+     prefedit.clear();
+     prefedit.commit();
+     super.onDestroy();
     }
 }

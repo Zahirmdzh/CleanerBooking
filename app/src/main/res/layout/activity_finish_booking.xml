@@ -14,26 +14,29 @@
         android:id="@+id/textView13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Booking Successful!" />
+        android:text="Booking Successful!"
+        android:textSize="24sp" />
 
     <TextView
         android:id="@+id/textView14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Booking reference ID:" />
+        android:text="Booking reference ID:"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/textViewID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="#4545sdf" />
+        android:text="#4545sdf"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/textView15"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="An Email has been sent to your inbox.Cleaners will be assigned
-                        and you will be notified shortly" />
+android:text="An Email has been sent to your inbox.Cleaners will be assigned and you will be notified shortly"
+        android:textSize="18sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -54,14 +57,6 @@
                 android:layout_gravity="bottom"
                 android:layout_weight="0.5"
                 android:text="Home" />
-
-            <Button
-                android:id="@+id/buttonBooking"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:layout_weight="0.5"
-                android:text="Booking" />
 
         </LinearLayout>
 

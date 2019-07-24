@@ -15,7 +15,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".RescheduleBookingActivity"></activity>
+
         <activity android:name=".ForgotPassword" />
         <activity android:name=".FinishBookingActivity" />
         <activity
@@ -66,7 +66,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".HomeActivity" />
         </activity>
-        <activity android:name=".ViewBookingActivity" />
+
         <activity
             android:name=".SignupActivity"
             android:label="Sign Up Account"
@@ -101,6 +101,25 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".RescheduleBookingActivity"
+            android:label="Confirm Booking"
+            android:parentActivityName=".HomeActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeActivity" />
+        </activity>
+
+        <activity
+            android:name=".ViewBookingActivity"
+            android:label="Confirm Booking"
+            android:parentActivityName=".HomeActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeActivity" />
+        </activity>
+
     </application>
 
 </manifest>

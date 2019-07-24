@@ -43,6 +43,8 @@ public class ViewBookingActivity extends AppCompatActivity {
         setSupportActionBar(myToolbar);
         titlebar = getSupportActionBar();
         titlebar.setTitle("Booking");
+        ActionBar AB = getSupportActionBar();
+        AB.setDisplayHomeAsUpEnabled(true);
 
         tvService = findViewById(R.id.textViewService);
         tvStatus = findViewById(R.id.textViewStatus);

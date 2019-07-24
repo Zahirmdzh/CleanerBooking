@@ -4,9 +4,11 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -36,11 +38,19 @@ public class RescheduleBookingActivity extends AppCompatActivity {
     Date d;
     String date,time,bookingID,dateString;
     Button btnConfirm;
+    private ActionBar titlebar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reschedule_booking);
+
+        Toolbar myTB = findViewById(R.id.my_toolbar);
+        setSupportActionBar(myTB);
+        ActionBar AB = getSupportActionBar();
+        AB.setDisplayHomeAsUpEnabled(true);
+        titlebar = getSupportActionBar();
+        titlebar.setTitle("Booking");
 
         tvDate = findViewById(R.id.textViewDate);
         tvTime = findViewById(R.id.textViewStartTime);
