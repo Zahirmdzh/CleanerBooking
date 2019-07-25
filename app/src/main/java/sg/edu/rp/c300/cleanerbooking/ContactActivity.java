@@ -65,7 +65,7 @@ public class ContactActivity extends AppCompatActivity {
         btnSend = findViewById(R.id.buttonSend);
 
         if (session.loggedinStatus() == true) {
-
+            // if user is registered it will always show user's email on EditText
             SharedPreferences pref = getSharedPreferences("pref2", MODE_PRIVATE);
             email = pref.getString("email", etEmail.getText().toString().trim());
             etEmail.setText(email);
@@ -111,36 +111,12 @@ public class ContactActivity extends AppCompatActivity {
 
 
 
-     /*   final String email = etEmail.getEditableText().toString().trim();
-        final String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-
-        etEmail.addTextChangedListener(new TextWatcher() {
-            public void afterTextChanged(Editable s) {
-
-                if (email.matches(emailPattern) && s.length() > 0) {
-                    Toast.makeText(getApplicationContext(), "valid email address", Toast.LENGTH_SHORT).show();
-                    // or
-                    etEmail.setError("valid email");
-                } else {
-                    Toast.makeText(getApplicationContext(), "Invalid email address", Toast.LENGTH_SHORT).show();
-                    //or
-                    etEmail.setError("invalid email");
-                }
-            }
-
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                // other stuffs
-            }
-
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // other stuffs
-            }
-        });*/
 
     }
 
     private void btnSendOnClick(View v) {
-        String url = "http://10.0.2.2/FYPCleanerAdmin/addEnquiry.php";
+       String url = "http://10.0.2.2/FYPCleanerAdmin/addEnquiry.php";
+ //       String url = "https://nogoodcodes.000webhostapp.com/addEnquiry.php";
         email = etEmail.getText().toString().trim();
         if (isValidEmail(email)) {
             String enquiry = etEnquiry.getText().toString();

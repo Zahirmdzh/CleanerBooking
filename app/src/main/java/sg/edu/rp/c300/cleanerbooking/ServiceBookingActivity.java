@@ -38,19 +38,20 @@ public class ServiceBookingActivity extends AppCompatActivity {
 
         tv=findViewById(R.id.textViewName);
         Intent i = getIntent();
-        Service service = (Service)i.getSerializableExtra("service");
+        final Service service = (Service)i.getSerializableExtra("service");
         tv.setText(service.getName() + "\n" + service.getDescription());
 
         pref = getSharedPreferences("mybooking",MODE_PRIVATE);
         prefedit = pref.edit();
-        prefedit.putString("servicename",service.getName());
-        prefedit.commit();
+
 
         btn = findViewById(R.id.button);
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                prefedit.putString("servicename",service.getName());
+                prefedit.commit();
                 startActivity(new Intent(ServiceBookingActivity.this, ServiceBookingActivity2.class));
             }
         });

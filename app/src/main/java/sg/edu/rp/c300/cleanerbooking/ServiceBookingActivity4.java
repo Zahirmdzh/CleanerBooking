@@ -63,7 +63,7 @@ public class ServiceBookingActivity4 extends AppCompatActivity {
         Toolbar myTB = findViewById(R.id.my_toolbar);
         setSupportActionBar(myTB);
         ActionBar AB = getSupportActionBar();
-        AB.setDisplayHomeAsUpEnabled(true);
+        AB.setDisplayHomeAsUpEnabled(false);
 
         layoutContact = findViewById(R.id.layoutC);
         layoutFname = findViewById(R.id.layoutF);
@@ -109,7 +109,7 @@ public class ServiceBookingActivity4 extends AppCompatActivity {
             contact = pref.getString("contact", "");
             fname = pref.getString("fname", "");
             lname = pref.getString("lname", "");
-            servicename = pref.getString("servicename", "");
+            servicename = pref.getString("servicename", "Not Selected");
             type = pref.getString("type", "");
             request = pref.getString("request", "");
             fullname = fname + " " + lname;
@@ -285,5 +285,39 @@ public class ServiceBookingActivity4 extends AppCompatActivity {
         notificationManager.notify(notificationID, n);
     }
 
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(ServiceBookingActivity4.this);
 
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+
+                prefedit = getApplicationContext().getSharedPreferences("mybooking", MODE_PRIVATE).edit();
+                prefedit.clear();
+                prefedit.commit();
+
+                Intent intent = new Intent(ServiceBookingActivity4.this,HomeActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+
+        AlertDialog myDialog = builder.create();
+
+        myDialog.setMessage("Pressing yes will bring you back to the Home Page");
+        myDialog.setTitle("Restart Booking?");
+
+        myDialog.show();
+
+
+    }
 }

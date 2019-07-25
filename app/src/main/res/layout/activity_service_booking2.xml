@@ -19,7 +19,7 @@
         android:clickable="true"
         android:drawableRight="@drawable/ic_access_time_black_24dp"
         android:padding="5dp"
-        android:text="Select Time:"
+        android:hint="Select Time:"
         android:textAlignment="center" />
 
     <TextView
@@ -40,7 +40,7 @@
         android:background="@drawable/textviewtime"
         android:drawableRight="@drawable/ic_date_range_black_24dp"
         android:padding="5dp"
-        android:text="Select Date:"
+        android:hint="Select Date:"
         android:textAlignment="center" />
 
     <TextView

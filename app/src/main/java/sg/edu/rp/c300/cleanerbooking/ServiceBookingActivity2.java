@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -66,12 +67,16 @@ public class ServiceBookingActivity2 extends AppCompatActivity {
 
         btnNext = findViewById(R.id.buttonNext);
         tvTime = findViewById(R.id.textViewStartTime);
+        tvDate = findViewById(R.id.textViewDate);
         spn = findViewById(R.id.spinnerDate);
         rg = findViewById(R.id.rg);
         rb1 = findViewById(R.id.radioButton);
         rb2 = findViewById(R.id.radioButton2);
         rb3 = findViewById(R.id.radioButton3);
         etReq = findViewById(R.id.editTextRequests);
+
+        // when activity create clear all fields first everytime.. for back press and everything
+
 
         session = new Session(this);
         if (session.loggedinStatus() == false) {
@@ -177,7 +182,7 @@ public class ServiceBookingActivity2 extends AppCompatActivity {
         theDay = c.get(Calendar.DAY_OF_MONTH);
 
 
-        tvDate = findViewById(R.id.textViewDate);
+
         tvDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -273,6 +278,7 @@ public class ServiceBookingActivity2 extends AppCompatActivity {
 
                     prefedit.commit();
 
+
                     startActivity(new Intent(ServiceBookingActivity2.this, ServiceBookingActivity3.class));
                 }
 
@@ -298,23 +304,17 @@ public class ServiceBookingActivity2 extends AppCompatActivity {
         super.onBackPressed();
     }
 
-/*    @Override
-    protected void onRestart() {
-        prefedit.clear();
-        prefedit.commit();
-        tvTime.setText("");
-        tvDate.setText("");
-        super.onRestart();
+    // to perform an action when back button is clicked
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+               onBackPressed();
+               return true;
+        }
+        return false;
     }
 
-    @Override
-    protected void onStop() {
-        prefedit.clear();
-        prefedit.commit();
-        tvTime.setText("");
-        tvDate.setText("");
-        super.onStop();
-    }*/
 
     @Override
     protected void onDestroy() {

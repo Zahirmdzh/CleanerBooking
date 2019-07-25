@@ -122,6 +122,17 @@
         android:orientation="vertical"
         android:layout_margin="10dp">
 
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:gravity="center_horizontal"
+            android:text="Any Enquiries? Contact Us below"
+            android:textColor="#635F5F"
+            android:textSize="20sp"
+            android:textStyle="bold|italic" />
+
         <LinearLayout
             android:id="@+id/layoutEmail"
             android:layout_width="match_parent"
@@ -152,15 +163,17 @@
         <EditText
             android:id="@+id/editTextEnquiry"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:background="@drawable/inputbox"
             android:ems="10"
+            android:maxLines="10"
             android:gravity="start|top"
             android:hint="@string/contactHint"
             android:inputType="textMultiLine"
-            android:padding="5dp"
-            android:maxLength="120"/>
+            android:maxLength="200"
+            android:padding="5dp" />
+
 
         <Button
             android:id="@+id/buttonSend"

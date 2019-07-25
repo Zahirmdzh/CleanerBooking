@@ -1,14 +1,17 @@
 package sg.edu.rp.c300.cleanerbooking;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -36,7 +39,7 @@ public class ServiceBookingActivity3 extends AppCompatActivity {
         Toolbar myTB = findViewById(R.id.my_toolbar);
         setSupportActionBar(myTB);
         ActionBar AB = getSupportActionBar();
-        AB.setDisplayHomeAsUpEnabled(true);
+        AB.setDisplayHomeAsUpEnabled(false);
         //Error Fields
         tvErrorFname = findViewById(R.id.textViewErrorFirst);
         tvErrorLname = findViewById(R.id.textViewErrorLast);
@@ -193,7 +196,7 @@ public class ServiceBookingActivity3 extends AppCompatActivity {
         etPhone.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
 
-                if (!etPhone.getText().toString().isEmpty() && etPhone.length() ==8 && s.length() > 0 && (etPhone.getText().toString().startsWith("9") || etPhone.getText().toString().startsWith("9")))
+                if (!etPhone.getText().toString().isEmpty() && etPhone.length() ==8 && s.length() > 0 && (etPhone.getText().toString().startsWith("9") || etPhone.getText().toString().startsWith("8")))
                 {
                     tvErrorPhone.setText("");
                     etPhone.setError(null);
@@ -249,10 +252,52 @@ public class ServiceBookingActivity3 extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        prefedit.clear();
-        prefedit.commit();
-        super.onBackPressed();
+
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(ServiceBookingActivity3.this);
+
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+
+                prefedit = getApplicationContext().getSharedPreferences("mybooking", MODE_PRIVATE).edit();
+                prefedit.clear();
+                prefedit.commit();
+
+                Intent intent = new Intent(ServiceBookingActivity3.this,HomeActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+
+        AlertDialog myDialog = builder.create();
+
+        myDialog.setMessage("Pressing yes will bring you back to the Home Page");
+        myDialog.setTitle("Restart Booking?");
+
+        myDialog.show();
+
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return false;
+    }
+
+
 /*
     @Override
     protected void onRestart() {
