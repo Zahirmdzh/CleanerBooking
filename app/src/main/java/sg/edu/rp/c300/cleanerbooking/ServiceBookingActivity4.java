@@ -259,7 +259,7 @@ public class ServiceBookingActivity4 extends AppCompatActivity {
             notificationManager.createNotificationChannel(channel);
         }
 
-        Intent intent = new Intent(ServiceBookingActivity4.this,ServiceBookingActivity4.class);
+        Intent intent = new Intent(ServiceBookingActivity4.this,HomeActivity.class);
 
         PendingIntent pIntent = PendingIntent.getActivity(
                 ServiceBookingActivity4.this,requestCode,intent,
