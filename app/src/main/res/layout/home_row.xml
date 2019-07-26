@@ -16,22 +16,27 @@
         android:scaleType="centerCrop"
         app:srcCompat="@drawable/office" />
 
-        <TextView
-            android:id="@+id/textViewTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="TextView"
-            android:textSize="25dp"
-            android:textStyle="bold" />
+    <TextView
+        android:id="@+id/textViewTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:text="TextView"
+        android:textColor="#5C5B5B"
+        android:textSize="25dp"
+        android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/textViewDesc"
-            android:layout_width="match_parent"
-            android:layout_height="67dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:text="TextView" />
+    <TextView
+        android:id="@+id/textViewTagline"
+        android:layout_width="match_parent"
+        android:layout_height="67dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="sans-serif-smallcaps"
+        android:text="TextView"
+        android:textColor="#646464"
+        android:textSize="18sp"
+        android:textStyle="italic" />
 
 
 

@@ -56,6 +56,8 @@ android:text="An Email has been sent to your inbox.Cleaners will be assigned and
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:layout_weight="0.5"
+                android:background="@color/button"
+                android:textColor="@color/textbutton"
                 android:text="Home" />
 
         </LinearLayout>

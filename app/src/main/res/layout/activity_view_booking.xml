@@ -11,7 +11,7 @@
         android:id="@+id/my_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
+        android:background="@color/toolbar"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:layout_constraintTop_toTopOf="parent"/>
@@ -56,9 +56,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
-                    android:text="TextView"
                     android:gravity="right"
-                    android:textSize="18sp"/>
+                    android:text="Not Assigned"
+                    android:textSize="18sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -166,6 +166,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
                     android:layout_weight="0.5"
+                    android:textColor="@color/textbutton"
+                    android:background="#FF5722"
                     android:text="Cancel booking" />
 
                 <Button
@@ -174,6 +176,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
                     android:layout_weight="0.5"
+                   android:background="@color/button"
+                    android:textColor="@color/textbutton"
                     android:text="Reschedule" />
 
             </LinearLayout>

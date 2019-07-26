@@ -13,9 +13,9 @@ import android.widget.TextView;
 
 public class ServiceBookingActivity extends AppCompatActivity {
 
-    TextView tv;
+    TextView tvName,tvDesc;
     private ActionBar titlebar;
-    ImageView iv;
+
     Button btn;
     SharedPreferences pref;
     SharedPreferences.Editor prefedit;
@@ -34,12 +34,14 @@ public class ServiceBookingActivity extends AppCompatActivity {
         titlebar.setTitle("Service");
 
 
-        iv = findViewById(R.id.imageView2);
 
-        tv=findViewById(R.id.textViewName);
+
+        tvName=findViewById(R.id.textViewName);
+        tvDesc=findViewById(R.id.textViewDesc);
         Intent i = getIntent();
         final Service service = (Service)i.getSerializableExtra("service");
-        tv.setText(service.getName() + "\n" + service.getDescription());
+        tvName.setText(service.getName());
+        tvDesc.setText(service.getDescription());
 
         pref = getSharedPreferences("mybooking",MODE_PRIVATE);
         prefedit = pref.edit();

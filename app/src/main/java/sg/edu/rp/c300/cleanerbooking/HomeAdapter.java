@@ -34,26 +34,26 @@ public class HomeAdapter extends ArrayAdapter<Service> {
         TextView tvTitle = rowView.findViewById(R.id.textViewTitle);
 
         ImageView ivImage = rowView.findViewById(R.id.imageView);
-        TextView tvDesc = rowView.findViewById(R.id.textViewDesc);
+        TextView tvTagline = rowView.findViewById(R.id.textViewTagline);
 
 
 
         //note position
         final Service currService = services.get(position);
-        String description = currService.getDescription();
+        String tagline = currService.getTagline();
         String name = currService.getName();
-        tvDesc.setText(description);
+        tvTagline.setText(tagline);
         tvTitle.setText(name);
 
         if (currService.getName().equalsIgnoreCase("Office Cleaning")) {
             ivImage.setImageResource(R.drawable.office);
 
         } else if (currService.getName().equalsIgnoreCase("Factory Cleaning")) {
-//            tvTitle.setText("Vaccination");
+
             ivImage.setImageResource(R.drawable.factory);
 
         } else if (currService.getName().equalsIgnoreCase("Warehouse Cleaning")) {
-//            tvTitle.setText("Anniversary");
+
             ivImage.setImageResource(R.drawable.general);
 
         }

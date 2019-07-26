@@ -202,16 +202,6 @@ public class HomeActivity extends AppCompatActivity {
 //                    mTextMessage.setText("Choose from a range of offers");
                     titlebar.setTitle("Redeem");
 
-//                    alReward= new ArrayList<Reward>();
-//
-//                    Reward reward1 = new Reward("Discount 1","50% Discount");
-//                    Reward reward2 = new Reward("Discount 2","Free Service");
-//
-//                    alReward.add(reward1);
-//                    alReward.add(reward2);
-//
-//                    aaReward = new RewardAdapter(HomeActivity.this,R.layout.profile_row,alReward);
-//                    lv.setAdapter(aaReward);
 
                     alReward = new ArrayList<Reward>();
                     aaReward = new RewardAdapter(HomeActivity.this, R.layout.reward_row, alReward);
@@ -296,8 +286,9 @@ public class HomeActivity extends AppCompatActivity {
                         JSONObject service = response.getJSONObject(i);
                         String serviceId = service.getString("service_id");
                         String name = service.getString("service_name");
+                        String tagline = service.getString("service_tagline");
                         String desc = service.getString("service_description");
-                        Service s = new Service(serviceId, name, desc);
+                        Service s = new Service(serviceId, name,tagline, desc);
                         alService.add(s);
                     }
 
@@ -345,10 +336,7 @@ public class HomeActivity extends AppCompatActivity {
             startActivity(i);
 
         }
-        if (id == R.id.action_notification) {
-            Intent i = new Intent(this, NotificationActivity.class);
-            startActivity(i);
-        }
+
         if (id == R.id.action_profile) {
             Intent i = new Intent(this, ProfileActivity.class);
             startActivity(i);
@@ -384,8 +372,9 @@ public class HomeActivity extends AppCompatActivity {
                         JSONObject service = response.getJSONObject(i);
                         String serviceId = service.getString("service_id");
                         String name = service.getString("service_name");
+                        String tagline = service.getString("service_tagline");
                         String desc = service.getString("service_description");
-                        Service s = new Service(serviceId, name, desc);
+                        Service s = new Service(serviceId, name, tagline, desc);
                         alService.add(s);
                     }
 

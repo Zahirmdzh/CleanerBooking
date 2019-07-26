@@ -5,5 +5,8 @@
     <color name="colorAccent">#D81B60</color>
     <color name="red">#E01313</color>
     <color name="black">#000000</color>
-
+    <color name="toolbar">#C1D6BE</color>
+    <color name="button">#14AB35</color>
+    <color name="textbutton">#FFFFFF</color>
+    <color name="cancelbutton">#FF9800</color>
 </resources>
