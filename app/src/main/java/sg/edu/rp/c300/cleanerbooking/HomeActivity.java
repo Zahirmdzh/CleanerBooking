@@ -73,7 +73,7 @@ public class HomeActivity extends AppCompatActivity {
             switch (item.getItemId()) {
 
                 case R.id.navigation_services:
-                    mTextMessage.setText(R.string.title_activity_services);
+//                    mTextMessage.setText(R.string.title_activity_services);
                     titlebar.setTitle("Services");
                     alService = new ArrayList<Service>();
 
@@ -81,7 +81,7 @@ public class HomeActivity extends AppCompatActivity {
                     return true;
 
                 case R.id.navigation_booking:
-                    mTextMessage.setText(R.string.title_booking);
+//                    mTextMessage.setText(R.string.title_booking);
                     titlebar.setTitle("Booking");
 
                     alBooking = new ArrayList<Booking>();
@@ -199,7 +199,7 @@ public class HomeActivity extends AppCompatActivity {
                     return true;
 
                 case R.id.navigation_redeem:
-                    mTextMessage.setText("Choose from a range of offers");
+//                    mTextMessage.setText("Choose from a range of offers");
                     titlebar.setTitle("Redeem");
 
 //                    alReward= new ArrayList<Reward>();
@@ -272,8 +272,7 @@ public class HomeActivity extends AppCompatActivity {
         Boolean stat = session.loggedinStatus();
         Log.d("STATUSS", String.valueOf(stat));
 
-        mTextMessage = findViewById(R.id.message);
-        mTextMessage.setText(R.string.title_activity_services);
+
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);

@@ -1,14 +1,10 @@
 package sg.edu.rp.c300.cleanerbooking;
 
 import android.content.Context;
-import android.content.Intent;
-import android.media.Image;
-import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,7 +13,7 @@ import java.util.ArrayList;
 public class HomeAdapter extends ArrayAdapter<Service> {
     Context context;
     ArrayList<Service> services;
-    customButtonListener customListener;
+
 
 
     public HomeAdapter(Context context, int resource, ArrayList<Service> objects) {
@@ -39,7 +35,7 @@ public class HomeAdapter extends ArrayAdapter<Service> {
 
         ImageView ivImage = rowView.findViewById(R.id.imageView);
         TextView tvDesc = rowView.findViewById(R.id.textViewDesc);
-        Button btnBook = rowView.findViewById(R.id.buttonBook);
+
 
 
         //note position
@@ -49,16 +45,20 @@ public class HomeAdapter extends ArrayAdapter<Service> {
         tvDesc.setText(description);
         tvTitle.setText(name);
 
+        if (currService.getName().equalsIgnoreCase("Office Cleaning")) {
+            ivImage.setImageResource(R.drawable.office);
 
-        btnBook.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-//
-//              Intent zoom=new Intent(parent.getContext(), NotificationActivity.class);
-//               parent.getContext().startActivity(zoom);
+        } else if (currService.getName().equalsIgnoreCase("Factory Cleaning")) {
+//            tvTitle.setText("Vaccination");
+            ivImage.setImageResource(R.drawable.factory);
 
-            }
-       });
+        } else if (currService.getName().equalsIgnoreCase("Warehouse Cleaning")) {
+//            tvTitle.setText("Anniversary");
+            ivImage.setImageResource(R.drawable.general);
+
+        }
+
+
 
         return rowView;
 
@@ -66,12 +66,5 @@ public class HomeAdapter extends ArrayAdapter<Service> {
     }
 
 
-    public interface customButtonListener {
-        public void onButtonClickListener(int position,String value);
-    }
-
-    public void setCustomButtonListener(customButtonListener listener) {
-        this.customListener = listener;
-    }
 
 }
