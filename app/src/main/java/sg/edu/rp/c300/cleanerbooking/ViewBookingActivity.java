@@ -20,6 +20,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -29,7 +30,7 @@ public class ViewBookingActivity extends AppCompatActivity {
 
     private ActionBar titlebar;
     Button btnReschedule,btnCancel;
-    TextView tvService, tvStatus, tvReq,tvStartTime;
+    TextView tvCleaner, tvService, tvStatus, tvReq,tvStartTime,tvAddress,tvID;
     String bookingID;
 
 
@@ -46,10 +47,13 @@ public class ViewBookingActivity extends AppCompatActivity {
         ActionBar AB = getSupportActionBar();
         AB.setDisplayHomeAsUpEnabled(true);
 
+        tvID = findViewById(R.id.textViewID);
         tvService = findViewById(R.id.textViewService);
         tvStatus = findViewById(R.id.textViewStatus);
         tvReq = findViewById(R.id.textViewRequested);
         tvStartTime = findViewById(R.id.textViewStartTime);
+        tvCleaner = findViewById(R.id.textViewCleaner);
+        tvAddress = findViewById(R.id.textViewBookingAddress);
 
         Intent i = getIntent();
         Booking selected = (Booking) i.getSerializableExtra("booking");
@@ -58,13 +62,17 @@ public class ViewBookingActivity extends AppCompatActivity {
         String status = selected.getStatus();
         String request = selected.getRequest();
         String startTime = selected.getDateTime();
+        String address = selected.getAddress();
         bookingID = selected.getId();
 
 
+        tvID.setText(bookingID);
         tvService.setText(servicename);
         tvStatus.setText(status);
         tvReq.setText(request);
         tvStartTime.setText(startTime);
+        tvAddress.setText(address);
+
 
 
         btnReschedule = findViewById(R.id.buttonReschedule);
@@ -116,6 +124,38 @@ public class ViewBookingActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        AsyncHttpClient client = new AsyncHttpClient();
+        RequestParams params = new RequestParams();
+        params.add("booking_id",bookingID);
+
+
+        client.post("http://10.0.2.2/FYPCleanerAdmin/getAssignedCleanersAndroid.php", params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+
+                try {
+                    Log.i("JSON Results: ", response.toString());
+                    for (int i = 0; i < response.length(); i++) {
+                        JSONObject data = response.getJSONObject(i);
+                        String cleanername = data.getString("cleaner_name");
+                        tvCleaner.setText(cleanername);
+                        Log.d("CLEANERNAME", cleanername);
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
+
+    }
+
     private void btnDeleteOnClick(View v) {
 
 
@@ -141,4 +181,5 @@ public class ViewBookingActivity extends AppCompatActivity {
             }
         });
     }
+
 }

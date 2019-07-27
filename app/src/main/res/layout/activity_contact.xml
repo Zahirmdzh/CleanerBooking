@@ -165,7 +165,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:background="@drawable/inputbox"
+            android:background="@drawable/enquirybox"
             android:ems="10"
             android:maxLines="10"
             android:gravity="start|top"

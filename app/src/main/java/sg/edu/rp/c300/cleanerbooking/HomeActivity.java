@@ -123,7 +123,8 @@ public class HomeActivity extends AppCompatActivity {
                                         String dateTime = booking.getString("booking_date_time");
                                         String status = booking.getString("booking_status");
                                         String request = booking.getString("booking_request");
-                                        Booking b = new Booking(bokingId, serviceName, dateTime, status, request);
+                                        String address = booking.getString("booking_address");
+                                        Booking b = new Booking(bokingId, serviceName, dateTime, status, request,address);
                                         alBooking.add(b);
                                     }
 
@@ -170,9 +171,10 @@ public class HomeActivity extends AppCompatActivity {
                                         String date = booking.getString("booking_date_time");
                                         String status = booking.getString("booking_status");
                                         String request = booking.getString("booking_request");
+                                        String address = booking.getString("booking_address");
                                         Log.d("DATEFOR", date);
 
-                                        Booking b = new Booking(id, name, date, status, request);
+                                        Booking b = new Booking(id, name, date, status, request,address);
                                         alBooking.add(b);
                                     }
 
