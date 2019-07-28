@@ -110,7 +110,7 @@ public class HomeActivity extends AppCompatActivity {
                         params.put("member_id", member_id);
 //                        params.put("email",email);
 
-                        client.post("http://10.0.2.2/FYPCleanerAdmin/getBookingAndroid.php",params, new JsonHttpResponseHandler() {
+                        client.post("http://10.0.2.2/FYPCleanerAdmin/getBookingAndroid.php", params, new JsonHttpResponseHandler() {
 
                             @Override
                             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
@@ -126,7 +126,7 @@ public class HomeActivity extends AppCompatActivity {
                                         String status = booking.getString("booking_status");
                                         String request = booking.getString("booking_request");
                                         String address = booking.getString("booking_address");
-                                        Booking b = new Booking(bokingId, serviceName, dateTime, status, request,address);
+                                        Booking b = new Booking(bokingId, serviceName, dateTime, status, request, address);
                                         alBooking.add(b);
                                     }
 
@@ -176,7 +176,7 @@ public class HomeActivity extends AppCompatActivity {
                                         String address = booking.getString("booking_address");
                                         Log.d("DATEFOR", date);
 
-                                        Booking b = new Booking(id, name, date, status, request,address);
+                                        Booking b = new Booking(id, name, date, status, request, address);
                                         alBooking.add(b);
                                     }
 
@@ -211,6 +211,7 @@ public class HomeActivity extends AppCompatActivity {
                     aaReward = new RewardAdapter(HomeActivity.this, R.layout.reward_row, alReward);
                     lv.setAdapter(aaReward);
 
+
                     AsyncHttpClient client1 = new AsyncHttpClient();
                     client1.get("http://10.0.2.2/FYPCleanerAdmin/getRewards.php", new JsonHttpResponseHandler() {
 
@@ -244,16 +245,16 @@ public class HomeActivity extends AppCompatActivity {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
                             Reward rewardSelected = alReward.get(pos);  // Get the selected Category
-                            if(session.loggedinStatus() == true) {
+                            if (session.loggedinStatus() == true) {
                                 Intent intent = new Intent(HomeActivity.this, RewardActivity.class);
                                 intent.putExtra("reward", rewardSelected);
                                 startActivity(intent);
-                            }
-                            else{
-                                Toast.makeText(getApplicationContext(),"Rewards can be reddem by registered member only!",Toast.LENGTH_LONG).show();
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Rewards can be redeemed by registered member only!", Toast.LENGTH_LONG).show();
                             }
                         }
                     });
+
 
                     return true;
 
@@ -268,52 +269,58 @@ public class HomeActivity extends AppCompatActivity {
                     aaHistory = new HistoryAdapter(HomeActivity.this, R.layout.history_row, alHistory);
                     lv.setAdapter(aaHistory);
 
-                    pref = getSharedPreferences("pref2", MODE_PRIVATE);
-                    final String member_id = pref.getString("member_id", "");
+                    if (session.loggedinStatus() == true) {
 
-                    RequestParams params = new RequestParams();
-                    params.put("member_id", member_id);
+                        pref = getSharedPreferences("pref2", MODE_PRIVATE);
+                        final String member_id = pref.getString("member_id", "");
 
-                    AsyncHttpClient client2 = new AsyncHttpClient();
-                    client2.post("http://10.0.2.2/FYPCleanerAdmin/redeemHistory.php",params, new JsonHttpResponseHandler() {
+                        RequestParams params = new RequestParams();
+                        params.put("member_id", member_id);
 
-                        @Override
-                        public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                            alHistory.clear();
-                            Log.i("RedeemHistory", response.toString());
-                            try {
-                                for (int i = 0; i < response.length(); i++) {
-                                    JSONObject history = response.getJSONObject(i);
+                        AsyncHttpClient client2 = new AsyncHttpClient();
+                        client2.post("http://10.0.2.2/FYPCleanerAdmin/redeemHistory.php",params, new JsonHttpResponseHandler() {
 
-                                    String name = history.getString("reward_code");
-                                    String used = history.getString("used");
+                            @Override
+                            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                                alHistory.clear();
+                                Log.i("RedeemHistory", response.toString());
+                                try {
+                                    for (int i = 0; i < response.length(); i++) {
+                                        JSONObject history = response.getJSONObject(i);
 
-                                    History h = new History(name,used);
-                                    alHistory.add(h);
+                                        String name = history.getString("reward_code");
+                                        String used = history.getString("used");
+
+                                        History h = new History(name,used);
+                                        alHistory.add(h);
+                                    }
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
                                 }
 
-                            } catch (JSONException e) {
-                                e.printStackTrace();
+                                aaHistory.notifyDataSetChanged();
                             }
+                        });
 
-                            aaHistory.notifyDataSetChanged();
-                        }
-                    });
+                        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
+                                History redeemSelected = alHistory.get(pos);  // Get the selected Category
+                                //String name = redeemSelected.getName();
+                                String use = redeemSelected.getUse();
+                                if (use.equalsIgnoreCase("yes")) {
+                                    Toast.makeText(getApplicationContext(), "This reward has been used", Toast.LENGTH_LONG).show();
 
-                    lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
-                            History redeemSelected = alHistory.get(pos);  // Get the selected Category
-                            //String name = redeemSelected.getName();
-                            String use = redeemSelected.getUse();
-                            if (use.equalsIgnoreCase("yes")) {
-                                Toast.makeText(getApplicationContext(), "This reward has been used", Toast.LENGTH_LONG).show();
-
-                            } else {
-                                Toast.makeText(getApplicationContext(), "This reward has not been used", Toast.LENGTH_LONG).show();
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "This reward has not been used", Toast.LENGTH_LONG).show();
+                                }
                             }
-                        }
-                    });
+                        });
+                    } else{
+                        Toast.makeText(getApplicationContext(),"Points are rewarded only for registered members only",Toast.LENGTH_LONG).show();
+                    }
+
                     return true;
             }
             return false;
@@ -410,8 +417,16 @@ public class HomeActivity extends AppCompatActivity {
         }
 
         if (id == R.id.action_profile) {
-            Intent i = new Intent(this, ProfileActivity.class);
-            startActivity(i);
+            SharedPreferences pref = getSharedPreferences("app", MODE_PRIVATE);
+            SharedPreferences.Editor editor = pref.edit();
+            editor.clear();
+            editor.commit();
+            if (session.loggedinStatus() == true) {
+                Intent i = new Intent(this, ProfileActivity.class);
+                startActivity(i);
+            }else{
+                Toast.makeText(getApplicationContext(),"Profiles exist for registered member only.",Toast.LENGTH_LONG).show();
+            }
         }
         if (id == R.id.action_logout) {
             SharedPreferences pref = getSharedPreferences("app", MODE_PRIVATE);

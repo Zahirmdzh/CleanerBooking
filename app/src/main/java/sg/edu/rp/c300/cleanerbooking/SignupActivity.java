@@ -100,8 +100,8 @@ public class SignupActivity extends AppCompatActivity {
                                     Toast.makeText(SignupActivity.this, "Register Successfull", Toast.LENGTH_LONG).show();
 
 
-                                } else {
-                                    Toast.makeText(SignupActivity.this, "Register failed. Please check your login credentials", Toast.LENGTH_LONG);
+                                } else{
+                                    Toast.makeText(SignupActivity.this, "Email already exists in our database", Toast.LENGTH_LONG).show();
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();

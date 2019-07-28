@@ -78,44 +78,44 @@ public class ProfileActivity extends AppCompatActivity{
         titlebar = getSupportActionBar();
         titlebar.setTitle("Profile");
 
-        AsyncHttpClient client = new AsyncHttpClient();
-        RequestParams params = new RequestParams();
+            AsyncHttpClient client = new AsyncHttpClient();
 
-        pref = getSharedPreferences("pref2", MODE_PRIVATE);
-        final String member_id = pref.getString("member_id", "");
+            RequestParams params = new RequestParams();
 
-        params.put("member_id",member_id);
+            pref = getSharedPreferences("pref2", MODE_PRIVATE);
+            final String member_id = pref.getString("member_id", "");
 
-        client.post("http://10.0.2.2/FYPCleanerAdmin/getMemberById.php",params, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+            params.put("member_id", member_id);
 
-                try {
-                    for (int i = 0; i < response.length(); i++) {
-                        Log.i("PROFILE", response.toString());
+            client.post("http://10.0.2.2/FYPCleanerAdmin/getMemberById.php", params, new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
 
-                        JSONObject profile = response.getJSONObject(i);
-                        memId = profile.getInt("member_id");
-                        memName = profile.getString("full_name");
-                        memAddress= profile.getString("address");
-                        memMobile = profile.getInt("mobile");
-                        memEmail = profile.getString("email");
-                        memPoint = profile.getInt("accumulated_points");
-                    //    Profile profile1 = new Profile(memId,memName, memMobile, memAddress, memEmail, memPoint);
+                    try {
+                        for (int i = 0; i < response.length(); i++) {
+                            Log.i("PROFILE", response.toString());
 
-                        name.setText(memName);
-                        address.setText(memAddress);
-                        phone.setText(String.valueOf(memMobile));
-                        email.setText(memEmail);
-                        point.setText(String.valueOf(memPoint));
+                            JSONObject profile = response.getJSONObject(i);
+                            memId = profile.getInt("member_id");
+                            memName = profile.getString("full_name");
+                            memAddress = profile.getString("address");
+                            memMobile = profile.getInt("mobile");
+                            memEmail = profile.getString("email");
+                            memPoint = profile.getInt("accumulated_points");
+                            //    Profile profile1 = new Profile(memId,memName, memMobile, memAddress, memEmail, memPoint);
+
+                            name.setText(memName);
+                            address.setText(memAddress);
+                            phone.setText(String.valueOf(memMobile));
+                            email.setText(memEmail);
+                            point.setText(String.valueOf(memPoint));
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
-            }
-        });
-
+            });
 
 
         edit.setOnClickListener(new View.OnClickListener() {
