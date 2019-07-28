@@ -78,7 +78,9 @@ public class SignupActivity extends AppCompatActivity {
 
                     // proceed to authenticate user
                     // TODO: call doLogin web service to authenticate use
-                    String url = "http://10.0.2.2/FYPCleanerAdmin/register.php";
+                    //String url = "http://10.0.2.2/FYPCleanerAdmin/rescheduleBooking.php";
+                    String url = "https://nogoodcodes.000webhostapp.com/register.php";
+                    //String url = "http://10.0.2.2/FYPCleanerAdmin/register.php";
                     RequestParams params = new RequestParams();
                     params.add("full_name", name);
                     params.add("email", email);

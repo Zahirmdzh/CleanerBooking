@@ -219,17 +219,23 @@ public class ServiceBookingActivity4 extends AppCompatActivity {
         }
 
         RequestParams params = new RequestParams();
+
         params.add("fullname", fullname);
         params.add("mobile", contact);
-        params.add("address_postal_code", address);
+        params.add("address", address);
         params.add("email", email);
+        params.add("uniquekey", key);
+
+
         params.add("booking_date_time", dateString);
         params.add("booking_service_name", servicename);
-        params.add("uniquekey", key);
         params.add("repeated", type);
         params.add("request",request);
 
-        client.post("http://10.0.2.2/FYPCleanerAdmin/addBookingAndroid.php", params, new JsonHttpResponseHandler() {
+        //String url = "http://10.0.2.2/FYPCleanerAdmin/addBookingAndroid.php";
+        String url = "https://nogoodcodes.000webhostapp.com/addBookingAndroid.php";
+
+        client.post(url, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
 

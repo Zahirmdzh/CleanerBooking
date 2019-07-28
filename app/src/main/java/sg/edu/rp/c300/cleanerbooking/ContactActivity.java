@@ -115,8 +115,8 @@ public class ContactActivity extends AppCompatActivity {
     }
 
     private void btnSendOnClick(View v) {
-       String url = "http://10.0.2.2/FYPCleanerAdmin/addEnquiry.php";
- //       String url = "https://nogoodcodes.000webhostapp.com/addEnquiry.php";
+  //     String url = "http://10.0.2.2/FYPCleanerAdmin/addEnquiry.php";
+        String url = "https://nogoodcodes.000webhostapp.com/addEnquiry.php";
         email = etEmail.getText().toString().trim();
         if (isValidEmail(email)) {
             String enquiry = etEnquiry.getText().toString();

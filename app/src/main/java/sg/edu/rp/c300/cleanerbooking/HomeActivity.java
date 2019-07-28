@@ -109,8 +109,11 @@ public class HomeActivity extends AppCompatActivity {
 
                         params.put("member_id", member_id);
 //                        params.put("email",email);
+                        String url2 = "https://nogoodcodes.000webhostapp.com/getBookingAndroid.php";
+                        //String ur2 = "http://10.0.2.2/FYPCleanerAdmin/getBookingAndroid.php";
 
-                        client.post("http://10.0.2.2/FYPCleanerAdmin/getBookingAndroid.php", params, new JsonHttpResponseHandler() {
+
+                        client.post(url2, params, new JsonHttpResponseHandler() {
 
                             @Override
                             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
@@ -159,7 +162,11 @@ public class HomeActivity extends AppCompatActivity {
 
                         params.put("uniquekey", key);
 
-                        client.post("http://10.0.2.2/FYPCleanerAdmin/getBookingToAndroidForGuest.php", params, new JsonHttpResponseHandler() {
+                        String url1 = "https://nogoodcodes.000webhostapp.com/getBookingToAndroidForGuest.php";
+                        //String url = "http://10.0.2.2/FYPCleanerAdmin/getBookingToAndroidForGuest.php";
+
+
+                        client.post(url1, params, new JsonHttpResponseHandler() {
 
                             @Override
                             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
@@ -203,7 +210,7 @@ public class HomeActivity extends AppCompatActivity {
                     return true;
 
                 case R.id.navigation_redeem:
-//                    mTextMessage.setText("Choose from a range of offers");
+//                  mTextMessage.setText("Choose from a range of offers");
                     titlebar.setTitle("Redeem");
 
 
@@ -211,9 +218,11 @@ public class HomeActivity extends AppCompatActivity {
                     aaReward = new RewardAdapter(HomeActivity.this, R.layout.reward_row, alReward);
                     lv.setAdapter(aaReward);
 
+                    String url = "https://nogoodcodes.000webhostapp.com/getRewards.php";
+                    //String url = "http://10.0.2.2/FYPCleanerAdmin/getRewards.php";
 
                     AsyncHttpClient client1 = new AsyncHttpClient();
-                    client1.get("http://10.0.2.2/FYPCleanerAdmin/getRewards.php", new JsonHttpResponseHandler() {
+                    client1.get(url, new JsonHttpResponseHandler() {
 
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
@@ -277,8 +286,11 @@ public class HomeActivity extends AppCompatActivity {
                         RequestParams params = new RequestParams();
                         params.put("member_id", member_id);
 
+                        String url1 = "https://nogoodcodes.000webhostapp.com/redeemHistory.php";
+                        //String url = "http://10.0.2.2/FYPCleanerAdmin/redeemHistory.php";
+
                         AsyncHttpClient client2 = new AsyncHttpClient();
-                        client2.post("http://10.0.2.2/FYPCleanerAdmin/redeemHistory.php",params, new JsonHttpResponseHandler() {
+                        client2.post(url1,params, new JsonHttpResponseHandler() {
 
                             @Override
                             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
@@ -353,8 +365,11 @@ public class HomeActivity extends AppCompatActivity {
         lv.setAdapter(aaService);
 
 
+        String url = "https://nogoodcodes.000webhostapp.com/getServices.php";
+        //String url = "http://10.0.2.2/FYPCleanerAdmin/getServices.php";
+
         AsyncHttpClient client = new AsyncHttpClient();
-        client.get("http://10.0.2.2/FYPCleanerAdmin/getServices.php", new JsonHttpResponseHandler() {
+        client.get(url, new JsonHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
@@ -447,7 +462,12 @@ public class HomeActivity extends AppCompatActivity {
         lv.setAdapter(aaService);
 
         AsyncHttpClient client = new AsyncHttpClient();
-        client.get("http://10.0.2.2/FYPCleanerAdmin/getServices.php", new JsonHttpResponseHandler() {
+
+        String url = "https://nogoodcodes.000webhostapp.com/getServices.php";
+        //String url = "http://10.0.2.2/FYPCleanerAdmin/getServices.php";
+
+
+        client.get(url, new JsonHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {

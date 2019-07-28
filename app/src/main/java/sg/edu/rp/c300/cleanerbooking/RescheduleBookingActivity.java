@@ -183,7 +183,10 @@ public class RescheduleBookingActivity extends AppCompatActivity {
             params.add("booking_id", bookingID);
             params.add("booking_date_time", dateString);
 
-            client.post("http://10.0.2.2/FYPCleanerAdmin/rescheduleBooking.php", params, new JsonHttpResponseHandler() {
+            //String url = "http://10.0.2.2/FYPCleanerAdmin/rescheduleBooking.php";
+            String url = "https://nogoodcodes.000webhostapp.com/rescheduleBooking.php";
+
+            client.post(url, params, new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
 

@@ -87,7 +87,10 @@ public class ProfileActivity extends AppCompatActivity{
 
             params.put("member_id", member_id);
 
-            client.post("http://10.0.2.2/FYPCleanerAdmin/getMemberById.php", params, new JsonHttpResponseHandler() {
+        //String url = "http://10.0.2.2/FYPCleanerAdmin/getMemberById.php";
+        String url = "https://nogoodcodes.000webhostapp.com/getMemberById.php";
+
+            client.post(url, params, new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
 
@@ -175,7 +178,10 @@ public class ProfileActivity extends AppCompatActivity{
                     params.put("address",newAddress1);
                     params.put("email",newEmail1);
 
-                    client.post("http://10.0.2.2/FYPCleanerAdmin/editMemberDetails.php",params, new JsonHttpResponseHandler() {
+
+                    //String url = "http://10.0.2.2/FYPCleanerAdmin/editMemberDetails.php";
+                    String url = "https://nogoodcodes.000webhostapp.com/editMemberDetails.php";
+                    client.post(url,params, new JsonHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                             try {

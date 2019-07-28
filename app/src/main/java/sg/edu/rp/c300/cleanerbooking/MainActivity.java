@@ -111,7 +111,9 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     // proceed to authenticate user
                     // TODO: call doLogin web service to authenticate use
-                    String url = "http://10.0.2.2/FYPCleanerAdmin/login.php";
+                    //String url = "http://10.0.2.2/FYPCleanerAdmin/login.php";
+                    String url = "https://nogoodcodes.000webhostapp.com/login.php";
+
                     RequestParams params = new RequestParams();
                     params.add("email", email);
                     params.add("password", pass);

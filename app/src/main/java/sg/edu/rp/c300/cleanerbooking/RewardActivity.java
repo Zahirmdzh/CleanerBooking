@@ -60,6 +60,7 @@ public class RewardActivity extends AppCompatActivity {
         final String member_id = pref.getString("member_id", "");
 
         id = reward.getId();
+        Log.d("IDREWARD",id.toString());
         code = reward.getCode();
         point = reward.getPoints();
         desc = reward.getDesc();

@@ -134,13 +134,18 @@ public class ViewBookingActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        SharedPreferences pref = getSharedPreferences("pref2",MODE_PRIVATE);
+        String email = pref.getString("email","");
 
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams params = new RequestParams();
         params.add("booking_id",bookingID);
+        params.add("email",email);
 
+        // String url = "http://10.0.2.2/FYPCleanerAdmin/getAssignedCleanersAndroid.php"
+        String url = "https://nogoodcodes.000webhostapp.com/getAssignedCleanersAndroid.php";
 
-        client.post("http://10.0.2.2/FYPCleanerAdmin/getAssignedCleanersAndroid.php", params, new JsonHttpResponseHandler() {
+        client.post(url, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
 
@@ -170,8 +175,11 @@ public class ViewBookingActivity extends AppCompatActivity {
         RequestParams params = new RequestParams();
         params.add("booking_id",bookingID);
 
+        String url = "https://nogoodcodes.000webhostapp.com/deleteBookingAndroid.php";
+        //String url = "http://10.0.2.2/FYPCleanerAdmin/deleteBookingAndroid.php";
 
-        client.post("http://10.0.2.2/FYPCleanerAdmin/deleteBookingAndroid.php", params, new JsonHttpResponseHandler() {
+
+        client.post(url, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
 
