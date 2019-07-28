@@ -3,6 +3,7 @@ package sg.edu.rp.c300.cleanerbooking;
 import android.content.DialogInterface;
 import android.content.Intent;
 
+import android.content.SharedPreferences;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -32,7 +33,8 @@ public class ViewBookingActivity extends AppCompatActivity {
     Button btnReschedule,btnCancel;
     TextView tvCleaner, tvService, tvStatus, tvReq,tvStartTime,tvAddress,tvID;
     String bookingID;
-
+    SharedPreferences pref;
+    SharedPreferences.Editor prefedit;
 
 
     @Override
@@ -65,6 +67,11 @@ public class ViewBookingActivity extends AppCompatActivity {
         String address = selected.getAddress();
         bookingID = selected.getId();
 
+        //for reward use
+        pref = getSharedPreferences("useRewards",MODE_PRIVATE);
+        prefedit = pref.edit();
+        prefedit.putInt("bookingId",Integer.parseInt(bookingID));
+        prefedit.commit();
 
         tvID.setText(bookingID);
         tvService.setText(servicename);

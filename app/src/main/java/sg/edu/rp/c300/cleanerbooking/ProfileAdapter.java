@@ -13,7 +13,7 @@ public class ProfileAdapter extends ArrayAdapter<Profile> {
 
     private ArrayList<Profile> profile;
     private Context context;
-    private TextView name;
+    private TextView name,address,phone,email,point;
 
     public ProfileAdapter(Context context, int resource, ArrayList<Profile> objects) {
         super(context, resource, objects);
@@ -29,7 +29,9 @@ public class ProfileAdapter extends ArrayAdapter<Profile> {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.profile_row, parent, false);
-        name = rowView.findViewById(R.id.tv_points);
+
+
+
         Profile currenTask = profile.get(position);
 
         for (int i=0;i<profile.size();i++) {
@@ -40,4 +42,3 @@ public class ProfileAdapter extends ArrayAdapter<Profile> {
         return rowView;
     }
 }
-

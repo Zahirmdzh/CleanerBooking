@@ -59,6 +59,8 @@ public class HomeActivity extends AppCompatActivity {
     ArrayAdapter aaReward;
     ArrayList<Reward> alReward;
 
+    ArrayAdapter aaHistory;
+    ArrayList<History> alHistory;
 
     SharedPreferences pref;
 
@@ -214,21 +216,26 @@ public class HomeActivity extends AppCompatActivity {
 
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-
-
+                            alReward.clear();
+                            Log.i("REWARD", response.toString());
                             try {
                                 for (int i = 0; i < response.length(); i++) {
                                     JSONObject reward = response.getJSONObject(i);
-                                    String rewardId = reward.getString("reward_code");
-                                    String name = reward.getString("reward_name");
+
+                                    Integer id = reward.getInt("reward_id");
+                                    String code = reward.getString("reward_code");
                                     String desc = reward.getString("reward_description");
-                                    Reward s = new Reward(name, desc);
+                                    Integer points = reward.getInt("point_required");
+                                    //String redeem = reward.getString("redeem");
+
+                                    Reward s = new Reward(id, code, desc, points);
                                     alReward.add(s);
                                 }
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
+
                             aaReward.notifyDataSetChanged();
                         }
                     });
@@ -237,19 +244,82 @@ public class HomeActivity extends AppCompatActivity {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
                             Reward rewardSelected = alReward.get(pos);  // Get the selected Category
-                            Intent intent = new Intent(HomeActivity.this, RewardActivity.class);
-                            intent.putExtra("reward", rewardSelected);
-                            startActivity(intent);
+                            if(session.loggedinStatus() == true) {
+                                Intent intent = new Intent(HomeActivity.this, RewardActivity.class);
+                                intent.putExtra("reward", rewardSelected);
+                                startActivity(intent);
+                            }
+                            else{
+                                Toast.makeText(getApplicationContext(),"Rewards can be reddem by registered member only!",Toast.LENGTH_LONG).show();
+                            }
                         }
                     });
 
                     return true;
 
+                case R.id.navigation_history:
+//                    mTextMessage.setText("History of redeemed offers");
+                    titlebar.setTitle("Redeem History");
 
+                 /*   alReward = new ArrayList<Reward>();
+                    addToRedeem();*/
+
+                    alHistory = new ArrayList<History>();
+                    aaHistory = new HistoryAdapter(HomeActivity.this, R.layout.history_row, alHistory);
+                    lv.setAdapter(aaHistory);
+
+                    pref = getSharedPreferences("pref2", MODE_PRIVATE);
+                    final String member_id = pref.getString("member_id", "");
+
+                    RequestParams params = new RequestParams();
+                    params.put("member_id", member_id);
+
+                    AsyncHttpClient client2 = new AsyncHttpClient();
+                    client2.post("http://10.0.2.2/FYPCleanerAdmin/redeemHistory.php",params, new JsonHttpResponseHandler() {
+
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                            alHistory.clear();
+                            Log.i("RedeemHistory", response.toString());
+                            try {
+                                for (int i = 0; i < response.length(); i++) {
+                                    JSONObject history = response.getJSONObject(i);
+
+                                    String name = history.getString("reward_code");
+                                    String used = history.getString("used");
+
+                                    History h = new History(name,used);
+                                    alHistory.add(h);
+                                }
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                            aaHistory.notifyDataSetChanged();
+                        }
+                    });
+
+                    lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
+                            History redeemSelected = alHistory.get(pos);  // Get the selected Category
+                            //String name = redeemSelected.getName();
+                            String use = redeemSelected.getUse();
+                            if (use.equalsIgnoreCase("yes")) {
+                                Toast.makeText(getApplicationContext(), "This reward has been used", Toast.LENGTH_LONG).show();
+
+                            } else {
+                                Toast.makeText(getApplicationContext(), "This reward has not been used", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    });
+                    return true;
             }
             return false;
         }
     };
+
 
 
     @Override
