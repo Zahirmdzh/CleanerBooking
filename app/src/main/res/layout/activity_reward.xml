@@ -65,7 +65,9 @@
             android:id="@+id/btnRedeem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="REDEEM NOW" />
+            android:text="REDEEM NOW"
+            android:textColor="@color/textbutton"
+            android:background="@color/button"/>
 
     </LinearLayout>
 
