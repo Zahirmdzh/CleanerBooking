@@ -220,6 +220,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_margin="10dp"
+        android:textAlignment="center"
         android:background="@drawable/inputbox"
         android:text="requests made will be here" />
 

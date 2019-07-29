@@ -109,9 +109,9 @@ public class HomeActivity extends AppCompatActivity {
 
                         params.put("member_id", member_id);
 //                        params.put("email",email);
-                        String url2 = "https://nogoodcodes.000webhostapp.com/getBookingAndroid.php";
-                        //String ur2 = "http://10.0.2.2/FYPCleanerAdmin/getBookingAndroid.php";
 
+                        String url2 = "https://nogoodcodes.000webhostapp.com/getBookingAndroid.php";
+                        //String ur12 = "http://10.0.2.2/FYPCleanerAdmin/getBookingAndroid.php";
 
                         client.post(url2, params, new JsonHttpResponseHandler() {
 
@@ -165,7 +165,6 @@ public class HomeActivity extends AppCompatActivity {
                         String url1 = "https://nogoodcodes.000webhostapp.com/getBookingToAndroidForGuest.php";
                         //String url = "http://10.0.2.2/FYPCleanerAdmin/getBookingToAndroidForGuest.php";
 
-
                         client.post(url1, params, new JsonHttpResponseHandler() {
 
                             @Override
@@ -210,7 +209,7 @@ public class HomeActivity extends AppCompatActivity {
                     return true;
 
                 case R.id.navigation_redeem:
-//                  mTextMessage.setText("Choose from a range of offers");
+//                    mTextMessage.setText("Choose from a range of offers");
                     titlebar.setTitle("Redeem");
 
 
@@ -218,10 +217,11 @@ public class HomeActivity extends AppCompatActivity {
                     aaReward = new RewardAdapter(HomeActivity.this, R.layout.reward_row, alReward);
                     lv.setAdapter(aaReward);
 
+                    AsyncHttpClient client1 = new AsyncHttpClient();
+
                     String url = "https://nogoodcodes.000webhostapp.com/getRewards.php";
                     //String url = "http://10.0.2.2/FYPCleanerAdmin/getRewards.php";
 
-                    AsyncHttpClient client1 = new AsyncHttpClient();
                     client1.get(url, new JsonHttpResponseHandler() {
 
                         @Override
@@ -286,10 +286,10 @@ public class HomeActivity extends AppCompatActivity {
                         RequestParams params = new RequestParams();
                         params.put("member_id", member_id);
 
+                        AsyncHttpClient client2 = new AsyncHttpClient();
+
                         String url1 = "https://nogoodcodes.000webhostapp.com/redeemHistory.php";
                         //String url = "http://10.0.2.2/FYPCleanerAdmin/redeemHistory.php";
-
-                        AsyncHttpClient client2 = new AsyncHttpClient();
                         client2.post(url1,params, new JsonHttpResponseHandler() {
 
                             @Override
@@ -364,9 +364,9 @@ public class HomeActivity extends AppCompatActivity {
         aaService = new HomeAdapter(HomeActivity.this, R.layout.home_row, alService);
         lv.setAdapter(aaService);
 
-
         String url = "https://nogoodcodes.000webhostapp.com/getServices.php";
         //String url = "http://10.0.2.2/FYPCleanerAdmin/getServices.php";
+
 
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(url, new JsonHttpResponseHandler() {
@@ -434,12 +434,11 @@ public class HomeActivity extends AppCompatActivity {
         if (id == R.id.action_profile) {
             SharedPreferences pref = getSharedPreferences("app", MODE_PRIVATE);
             SharedPreferences.Editor editor = pref.edit();
-            editor.clear();
-            editor.commit();
             if (session.loggedinStatus() == true) {
                 Intent i = new Intent(this, ProfileActivity.class);
                 startActivity(i);
             }else{
+                item.setVisible(false);
                 Toast.makeText(getApplicationContext(),"Profiles exist for registered member only.",Toast.LENGTH_LONG).show();
             }
         }
@@ -461,12 +460,10 @@ public class HomeActivity extends AppCompatActivity {
         aaService = new HomeAdapter(HomeActivity.this, R.layout.home_row, alService);
         lv.setAdapter(aaService);
 
-        AsyncHttpClient client = new AsyncHttpClient();
-
         String url = "https://nogoodcodes.000webhostapp.com/getServices.php";
         //String url = "http://10.0.2.2/FYPCleanerAdmin/getServices.php";
 
-
+        AsyncHttpClient client = new AsyncHttpClient();
         client.get(url, new JsonHttpResponseHandler() {
 
             @Override

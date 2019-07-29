@@ -111,7 +111,7 @@ public class ProfileActivity extends AppCompatActivity{
                             address.setText(memAddress);
                             phone.setText(String.valueOf(memMobile));
                             email.setText(memEmail);
-                            point.setText(String.valueOf(memPoint));
+                            point.setText("Loyalty Points: " + String.valueOf(memPoint));
                         }
 
                     } catch (JSONException e) {

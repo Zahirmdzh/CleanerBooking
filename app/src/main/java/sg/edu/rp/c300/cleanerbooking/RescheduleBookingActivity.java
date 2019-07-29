@@ -195,6 +195,7 @@ public class RescheduleBookingActivity extends AppCompatActivity {
 
 
                         Toast.makeText(getApplicationContext(), response.getString("message"), Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(RescheduleBookingActivity.this,HomeActivity.class));
 
                     } catch (JSONException e) {
                         e.printStackTrace();

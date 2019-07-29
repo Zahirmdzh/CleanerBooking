@@ -84,8 +84,10 @@ public class RewardActivity extends AppCompatActivity {
                 params.add("redeem","yes");
                 params.add("point_required",point.toString());
 
+                String url = "https://nogoodcodes.000webhostapp.com/redeemReward.php";
+                //String url = "http://10.0.2.2/FYPCleanerAdmin/redeemReward.php";
 
-                client.post("http://10.0.2.2/FYPCleanerAdmin/redeemReward.php", params, new JsonHttpResponseHandler() {
+                client.post(url, params, new JsonHttpResponseHandler() {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
 
